@@ -1,0 +1,12 @@
+.root {
+    position: relative;
+    width: 600px;
+    height: 912px;
+    background: #131316;
+}
+
+.contents {
+    display: flex;
+    width: 625px;
+    flex-wrap: wrap;
+}

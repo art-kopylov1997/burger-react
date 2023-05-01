@@ -1,0 +1,21 @@
+.content {
+    height: 55vh;
+    overflow: auto;
+}
+
+.elementWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.checkoutBlock {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

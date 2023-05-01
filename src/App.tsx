@@ -1,14 +1,12 @@
 import React from "react";
 import AppHeader from "./components/app-header";
-import BurgerIngredients from "./components/burger-ingredients";
+import WithBurgersComponents from "./hocs/with-burgers-components";
 
 function App() {
   return (
     <div className="App">
       <AppHeader />
-      <main>
-        <BurgerIngredients />
-      </main>
+      <WithBurgersComponents />
     </div>
   );
 }

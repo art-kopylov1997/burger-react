@@ -1,12 +1,13 @@
 .root {
     position: relative;
-    width: 600px;
-    height: 912px;
+    width: 50vw;
     background: #131316;
 }
 
-.contents {
+.content {
     display: flex;
-    width: 625px;
+    width: 52vw;
+    height: 50vh;
     flex-wrap: wrap;
+    overflow: auto;
 }

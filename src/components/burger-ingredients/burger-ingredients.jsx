@@ -37,13 +37,13 @@ const BurgerIngredients = () => {
           </Tab>
         </div>
         <div className="text text_type_main-medium mt-10">{currentType}</div>
-        <div className={classes.contents}>
+        <div className={classes.content}>
           {currentType === "Булки" &&
             data
               .filter((el) => el.type === "bun")
               .map((el) => (
                 <CardIngredient
-                  key={el.id}
+                  key={el._id}
                   name={el.name}
                   image={el.image}
                   price={el.price}
@@ -54,7 +54,7 @@ const BurgerIngredients = () => {
               .filter((el) => el.type === "sauce")
               .map((el) => (
                 <CardIngredient
-                  key={el.id}
+                  key={el._id}
                   name={el.name}
                   image={el.image}
                   price={el.price}
@@ -65,7 +65,7 @@ const BurgerIngredients = () => {
               .filter((el) => el.type === "main")
               .map((el) => (
                 <CardIngredient
-                  key={el.id}
+                  key={el._id}
                   name={el.name}
                   image={el.image}
                   price={el.price}

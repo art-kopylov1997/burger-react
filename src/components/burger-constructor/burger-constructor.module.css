@@ -1,21 +1,26 @@
 .content {
-    height: 55vh;
-    overflow: auto;
+  height: 45vh;
+  overflow: auto;
 }
 
 .elementWrapper {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .checkoutBlock {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .price {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price svg {
+  height: 33px;
+  width: 33px;
 }

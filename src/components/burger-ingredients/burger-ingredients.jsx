@@ -8,35 +8,34 @@ const BurgerIngredients = () => {
   const [currentType, setCurrentType] = useState("Булки");
 
   return (
-    <section className={classes.root}>
-      <div style={{ position: "absolute" }}>
-        <div className="text text_type_main-large mt-10 mb-5">
-          Соберите бургер
-        </div>
-        <div style={{ display: "flex" }}>
-          <Tab
-            value="Булки"
-            active={currentType === "Булки"}
-            onClick={setCurrentType}
-          >
-            Булки
-          </Tab>
-          <Tab
-            value="Соусы"
-            active={currentType === "Соусы"}
-            onClick={setCurrentType}
-          >
-            Соусы
-          </Tab>
-          <Tab
-            value="Начинки"
-            active={currentType === "Начинки"}
-            onClick={setCurrentType}
-          >
-            Начинки
-          </Tab>
-        </div>
-        <div className="text text_type_main-medium mt-10">{currentType}</div>
+    <section>
+      <h2 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h2>
+      <div style={{ display: "flex" }}>
+        <Tab
+          value="Булки"
+          active={currentType === "Булки"}
+          onClick={setCurrentType}
+        >
+          Булки
+        </Tab>
+        <Tab
+          value="Соусы"
+          active={currentType === "Соусы"}
+          onClick={setCurrentType}
+        >
+          Соусы
+        </Tab>
+        <Tab
+          value="Начинки"
+          active={currentType === "Начинки"}
+          onClick={setCurrentType}
+        >
+          Начинки
+        </Tab>
+      </div>
+
+      <div className={classes.contentWrapper}>
+        <h3 className="text text_type_main-medium mt-10">{currentType}</h3>
         <div className={classes.content}>
           {currentType === "Булки" &&
             data
@@ -47,6 +46,7 @@ const BurgerIngredients = () => {
                   name={el.name}
                   image={el.image}
                   price={el.price}
+                  selected={el.name === "Краторная булка N-200i"}
                 />
               ))}
           {currentType === "Соусы" &&

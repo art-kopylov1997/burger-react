@@ -34,44 +34,26 @@ const BurgerIngredients = () => {
         </Tab>
       </div>
 
-      <div className={classes.contentWrapper}>
-        <h3 className="text text_type_main-medium mt-10">{currentType}</h3>
-        <div className={classes.content}>
-          {currentType === "Булки" &&
-            data
-              .filter((el) => el.type === "bun")
-              .map((el) => (
-                <CardIngredient
-                  key={el._id}
-                  name={el.name}
-                  image={el.image}
-                  price={el.price}
-                  selected={el.name === "Краторная булка N-200i"}
-                />
-              ))}
-          {currentType === "Соусы" &&
-            data
-              .filter((el) => el.type === "sauce")
-              .map((el) => (
-                <CardIngredient
-                  key={el._id}
-                  name={el.name}
-                  image={el.image}
-                  price={el.price}
-                />
-              ))}
-          {currentType === "Начинки" &&
-            data
-              .filter((el) => el.type === "main")
-              .map((el) => (
-                <CardIngredient
-                  key={el._id}
-                  name={el.name}
-                  image={el.image}
-                  price={el.price}
-                />
-              ))}
-        </div>
+      <h3 className="text text_type_main-medium mt-10">{currentType}</h3>
+      <div className={classes.content}>
+        {currentType === "Булки" &&
+          data
+            .filter((ingredient) => ingredient.type === "bun")
+            .map((ingredient) => (
+              <CardIngredient key={ingredient._id} ingredient={ingredient} />
+            ))}
+        {currentType === "Соусы" &&
+          data
+            .filter((ingredient) => ingredient.type === "sauce")
+            .map((ingredient) => (
+              <CardIngredient key={ingredient._id} ingredient={ingredient} />
+            ))}
+        {currentType === "Начинки" &&
+          data
+            .filter((ingredient) => ingredient.type === "main")
+            .map((ingredient) => (
+              <CardIngredient key={ingredient._id} ingredient={ingredient} />
+            ))}
       </div>
     </section>
   );

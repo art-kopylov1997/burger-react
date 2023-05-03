@@ -23,6 +23,8 @@
 
   background: #4c4cff;
   border-radius: 16px;
+
+  cursor: pointer;
 }
 
 .price {

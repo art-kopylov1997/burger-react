@@ -1,3 +1,4 @@
+import { useState } from "react";
 import classes from "./burger-constructor.module.css";
 import {
   DragIcon,
@@ -6,16 +7,30 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import data from "../../utils/data";
+import Modal from "../modal";
+import OrderDetails from "../order-details";
+import PropTypes from "prop-types";
 
-const BurgerConstructor = () => {
+const BurgerConstructor = ({ ingredients }) => {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const openModal = () => {
+    setIsOpenModal(true);
+  };
+
+  const closeModal = () => {
+    setIsOpenModal(false);
+  };
+
   const getCratorBunImage = () => {
-    return data.find((el) => el.name === "Краторная булка N-200i").image;
+    const typeImage = data.find((el) => el.name === "Краторная булка N-200i");
+    return typeImage.image || null;
   };
 
   return (
     <section>
       <div className="mt-25">
-        <div className={classes.contentWrapper}>
+        <div>
           <ConstructorElement
             extraClass="ml-5 mb-1"
             type="top"
@@ -25,18 +40,18 @@ const BurgerConstructor = () => {
             thumbnail={getCratorBunImage()}
           />
           <div className={classes.content}>
-            {data
-              .filter((el) => el.type !== "bun")
-              .map((el) => (
+            {ingredients
+              .filter((ingredient) => ingredient.type !== "bun")
+              .map((ingredient) => (
                 <div
-                  key={el._id}
+                  key={ingredient._id}
                   className={`${classes.elementWrapper} mt-4 mb-4 mr-2`}
                 >
                   <DragIcon type="primary" />
                   <ConstructorElement
-                    thumbnail={el.image}
-                    price={el.price}
-                    text={el.name}
+                    thumbnail={ingredient.image}
+                    price={ingredients.price}
+                    text={ingredient.name}
                   />
                 </div>
               ))}
@@ -55,13 +70,33 @@ const BurgerConstructor = () => {
             310
             <CurrencyIcon type="primary" />
           </div>
-          <Button htmlType="button" type="primary" size="large">
+          <Button
+            htmlType="button"
+            type="primary"
+            size="large"
+            onClick={openModal}
+          >
             Оформить заказ
           </Button>
+          {isOpenModal && (
+            <Modal headerText="" closeModal={closeModal}>
+              <OrderDetails />
+            </Modal>
+          )}
         </div>
       </div>
     </section>
   );
+};
+
+BurgerConstructor.propTypes = {
+  ingredients: {
+    name: PropTypes.string,
+    price: PropTypes.number,
+    image: PropTypes.string,
+    type: PropTypes.string,
+    _id: PropTypes.string,
+  },
 };
 
 export default BurgerConstructor;

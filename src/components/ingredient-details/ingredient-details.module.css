@@ -1,0 +1,22 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ingredientImage {
+    width: 480px;
+    height: 240px;
+}
+
+.nutritionalBlock {
+    display: flex;
+    gap: 30px;
+}
+
+.nutritionals {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}

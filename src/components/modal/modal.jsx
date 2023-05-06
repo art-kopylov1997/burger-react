@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import classes from "./modal.module.css";
 import { createPortal } from "react-dom";
 import ModalOverlay from "./modal-overlay";
@@ -6,6 +8,20 @@ import PropTypes from "prop-types";
 
 const Modal = ({ title, closeModal, children }) => {
   const divModals = document.getElementById("modals");
+
+  function handleKeyDown(event) {
+    if (event.code === "Escape") {
+      closeModal();
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return createPortal(
     <>

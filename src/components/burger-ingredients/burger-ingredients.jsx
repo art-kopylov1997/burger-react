@@ -5,23 +5,31 @@ import CardIngredient from "../card-ingredient";
 import Modal from "../modal";
 import IngredientDetails from "../ingredient-details";
 import PropTypes from "prop-types";
+import ingredientPropTypes from "../../utils/types";
+import { useModal } from "../../hooks/useModal";
 
 const BurgerIngredients = ({ ingredients }) => {
   const [currentType, setCurrentType] = useState("Булки");
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [currentIngredient, setCurrentIngredient] = useState(null);
+  const { isModalOpen, openModal, closeModal } = useModal();
 
-  const openModal = () => {
-    setIsOpenModal(true);
+  const typeAdapter = (type) => {
+    const isBun = currentType === "Булки" && type === "bun";
+    const isSauce = currentType === "Соусы" && type === "sauce";
+    const isMain = currentType === "Начинки" && type === "main";
+
+    return isBun || isSauce || isMain;
   };
 
-  const closeModal = () => {
-    setIsOpenModal(false);
+  const passIngredientToModal = (ingredient) => {
+    openModal();
+    setCurrentIngredient(ingredient);
   };
 
   return (
     <section>
       <h2 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h2>
-      <div style={{ display: "flex" }}>
+      <div className={classes.tabBlock}>
         <Tab
           value="Булки"
           active={currentType === "Булки"}
@@ -47,67 +55,28 @@ const BurgerIngredients = ({ ingredients }) => {
 
       <h3 className="text text_type_main-medium mt-10">{currentType}</h3>
       <div className={classes.content}>
-        {currentType === "Булки" &&
-          ingredients
-            .filter((ingredient) => ingredient.type === "bun")
-            .map((ingredient) => (
-              <>
-                <CardIngredient
-                  key={ingredient._id}
-                  ingredient={ingredient}
-                  onClick={openModal}
-                />
-                {isOpenModal && (
-                  <Modal title="Детали ингредиента" closeModal={closeModal}>
-                    <IngredientDetails ingredient={ingredient} />
-                  </Modal>
-                )}
-              </>
-            ))}
-        {currentType === "Соусы" &&
-          ingredients
-            .filter((ingredient) => ingredient.type === "sauce")
-            .map((ingredient) => (
-              <>
-                <CardIngredient
-                  key={ingredient._id}
-                  ingredient={ingredient}
-                  onClick={openModal}
-                />
-                {isOpenModal && (
-                  <Modal title="Детали ингредиента" closeModal={closeModal}>
-                    <IngredientDetails ingredient={ingredient} />
-                  </Modal>
-                )}
-              </>
-            ))}
-        {currentType === "Начинки" &&
-          ingredients
-            .filter((ingredient) => ingredient.type === "main")
-            .map((ingredient) => (
-              <>
-                <CardIngredient
-                  key={ingredient._id}
-                  ingredient={ingredient}
-                  onClick={openModal}
-                />
-                {isOpenModal && (
-                  <Modal title="Детали ингредиента" closeModal={closeModal}>
-                    <IngredientDetails ingredient={ingredient} />
-                  </Modal>
-                )}
-              </>
-            ))}
+        {ingredients
+          .filter((ingredient) => typeAdapter(ingredient.type))
+          .map((ingredient) => (
+            <CardIngredient
+              key={ingredient._id}
+              ingredient={ingredient}
+              onClick={() => passIngredientToModal(ingredient)}
+            />
+          ))}
       </div>
+
+      {isModalOpen && (
+        <Modal title="Детали ингредиента" closeModal={closeModal}>
+          <IngredientDetails ingredient={currentIngredient} />
+        </Modal>
+      )}
     </section>
   );
 };
 
 BurgerIngredients.propTypes = {
-  ingredients: {
-    type: PropTypes.string,
-    _id: PropTypes.string,
-  },
+  ingredients: PropTypes.arrayOf(ingredientPropTypes),
 };
 
 export default BurgerIngredients;

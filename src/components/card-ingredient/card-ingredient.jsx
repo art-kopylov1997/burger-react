@@ -1,6 +1,7 @@
 import classes from "./card-ingredient.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import ingredientPropTypes from "../../utils/types";
 
 const CardIngredient = ({ ingredient, onClick }) => {
   return (
@@ -30,11 +31,7 @@ const CardIngredient = ({ ingredient, onClick }) => {
 };
 
 CardIngredient.propTypes = {
-  ingredient: {
-    name: PropTypes.string,
-    price: PropTypes.number,
-    image: PropTypes.string,
-  },
+  ingredient: ingredientPropTypes,
   onClick: PropTypes.func,
 };
 

@@ -1,5 +1,5 @@
 import classes from "./ingredient-details.module.css";
-import PropTypes from "prop-types";
+import ingredientPropTypes from "../../utils/types";
 
 const IngredientDetails = ({ ingredient }) => {
   return (
@@ -50,15 +50,7 @@ const IngredientDetails = ({ ingredient }) => {
 };
 
 IngredientDetails.propTypes = {
-  ingredient: {
-    name: PropTypes.string,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    calories: PropTypes.number,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-  },
+  ingredient: ingredientPropTypes,
 };
 
 export default IngredientDetails;

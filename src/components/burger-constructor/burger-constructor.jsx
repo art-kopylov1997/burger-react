@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useModal } from "../../hooks/useModal";
 import classes from "./burger-constructor.module.css";
 import {
   DragIcon,
@@ -10,21 +10,14 @@ import data from "../../utils/data";
 import Modal from "../modal";
 import OrderDetails from "../order-details";
 import PropTypes from "prop-types";
+import ingredientPropTypes from "../../utils/types";
 
 const BurgerConstructor = ({ ingredients }) => {
-  const [isOpenModal, setIsOpenModal] = useState(false);
-
-  const openModal = () => {
-    setIsOpenModal(true);
-  };
-
-  const closeModal = () => {
-    setIsOpenModal(false);
-  };
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const getCratorBunImage = () => {
     const typeImage = data.find((el) => el.name === "Краторная булка N-200i");
-    return typeImage.image || null;
+    return typeImage.image;
   };
 
   return (
@@ -78,7 +71,7 @@ const BurgerConstructor = ({ ingredients }) => {
           >
             Оформить заказ
           </Button>
-          {isOpenModal && (
+          {isModalOpen && (
             <Modal headerText="" closeModal={closeModal}>
               <OrderDetails />
             </Modal>
@@ -90,13 +83,7 @@ const BurgerConstructor = ({ ingredients }) => {
 };
 
 BurgerConstructor.propTypes = {
-  ingredients: {
-    name: PropTypes.string,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    type: PropTypes.string,
-    _id: PropTypes.string,
-  },
+  ingredients: PropTypes.arrayOf(ingredientPropTypes),
 };
 
 export default BurgerConstructor;

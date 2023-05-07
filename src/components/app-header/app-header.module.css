@@ -12,6 +12,10 @@
     0 0 1px rgba(0, 0, 0, 0.04);
 }
 
+.root {
+    display: flex;
+}
+
 .wrapperNav {
     display: flex;
     align-items: center;

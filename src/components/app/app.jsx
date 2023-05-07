@@ -10,21 +10,29 @@ function App() {
     ingredients: [],
   });
 
-  const getIngredients = async () => {
+  const getIngredients = () => {
     setState({ ...state, hasError: false });
-    const res = await fetch(URL);
-    const data = await res.json();
-    setState({
-      ...state,
-      ingredients: data.data,
-      hasError: false,
-    });
+    fetch(URL)
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+      })
+      .then((data) =>
+        setState({
+          ...state,
+          ingredients: data.data,
+          hasError: false,
+        })
+      )
+      .catch((e) => {
+        setState({ ...state, hasError: true });
+      });
   };
 
   useEffect(() => {
-    getIngredients().catch((e) => {
-      setState({ ...state, hasError: true });
-    });
+    getIngredients();
   }, []);
 
   return (

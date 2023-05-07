@@ -5,3 +5,7 @@
   height: 50vh;
   overflow-x: hidden;
 }
+
+.tabBlock {
+  display: flex;
+}

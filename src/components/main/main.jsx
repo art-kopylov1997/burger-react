@@ -1,6 +1,7 @@
 import classes from "./main.module.css";
 import BurgerIngredients from "../burger-ingredients";
 import BurgerConstructor from "../burger-constructor";
+import ingredientPropTypes from "../../utils/types";
 import PropTypes from "prop-types";
 
 function Main({ ingredients }) {
@@ -13,7 +14,7 @@ function Main({ ingredients }) {
 }
 
 Main.propTypes = {
-  ingredient: PropTypes.object,
+  ingredients: PropTypes.arrayOf(ingredientPropTypes),
 };
 
 export default Main;

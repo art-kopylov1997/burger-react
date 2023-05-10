@@ -1,3 +1,4 @@
+import { useModal } from "../../hooks/useModal";
 import classes from "./burger-constructor.module.css";
 import {
   DragIcon,
@@ -6,16 +7,23 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import data from "../../utils/data";
+import Modal from "../modal";
+import OrderDetails from "../order-details";
+import PropTypes from "prop-types";
+import ingredientPropTypes from "../../utils/types";
 
-const BurgerConstructor = () => {
+const BurgerConstructor = ({ ingredients }) => {
+  const { isModalOpen, openModal, closeModal } = useModal();
+
   const getCratorBunImage = () => {
-    return data.find((el) => el.name === "Краторная булка N-200i").image;
+    const typeImage = data.find((el) => el.name === "Краторная булка N-200i");
+    return typeImage.image;
   };
 
   return (
     <section>
       <div className="mt-25">
-        <div className={classes.contentWrapper}>
+        <div>
           <ConstructorElement
             extraClass="ml-5 mb-1"
             type="top"
@@ -25,18 +33,18 @@ const BurgerConstructor = () => {
             thumbnail={getCratorBunImage()}
           />
           <div className={classes.content}>
-            {data
-              .filter((el) => el.type !== "bun")
-              .map((el) => (
+            {ingredients
+              .filter((ingredient) => ingredient.type !== "bun")
+              .map((ingredient) => (
                 <div
-                  key={el._id}
+                  key={ingredient._id}
                   className={`${classes.elementWrapper} mt-4 mb-4 mr-2`}
                 >
                   <DragIcon type="primary" />
                   <ConstructorElement
-                    thumbnail={el.image}
-                    price={el.price}
-                    text={el.name}
+                    thumbnail={ingredient.image}
+                    price={ingredients.price}
+                    text={ingredient.name}
                   />
                 </div>
               ))}
@@ -55,13 +63,27 @@ const BurgerConstructor = () => {
             310
             <CurrencyIcon type="primary" />
           </div>
-          <Button htmlType="button" type="primary" size="large">
+          <Button
+            htmlType="button"
+            type="primary"
+            size="large"
+            onClick={openModal}
+          >
             Оформить заказ
           </Button>
+          {isModalOpen && (
+            <Modal headerText="" closeModal={closeModal}>
+              <OrderDetails />
+            </Modal>
+          )}
         </div>
       </div>
     </section>
   );
+};
+
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientPropTypes),
 };
 
 export default BurgerConstructor;

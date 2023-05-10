@@ -9,7 +9,7 @@ import {
 const AppHeader = () => {
   return (
     <header className={`${classes.header} text text_type_main-default m-10`}>
-      <div style={{ display: "flex" }} className="pl-20">
+      <div className={`${classes.root} pl-20`}>
         <div className={`${classes.wrapperNav} p-4`}>
           <BurgerIcon type="primary" />
           <span>Конструктор</span>

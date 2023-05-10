@@ -1,10 +1,11 @@
 import classes from "./card-ingredient.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import ingredientPropTypes from "../../utils/types";
 
-const CardIngredient = ({ ingredient }) => {
+const CardIngredient = ({ ingredient, onClick }) => {
   return (
-    <div className={`${classes.root} mt-6 mb-10 ml-4 mr-6`}>
+    <div className={`${classes.root} mt-6 mb-10 ml-4 mr-6`} onClick={onClick}>
       <div className={classes.wrapperImage}>
         {ingredient.name === "Краторная булка N-200i" && (
           <div
@@ -30,10 +31,8 @@ const CardIngredient = ({ ingredient }) => {
 };
 
 CardIngredient.propTypes = {
-  name: PropTypes.string,
-  price: PropTypes.number,
-  image: PropTypes.string,
-  selected: PropTypes.bool,
+  ingredient: ingredientPropTypes,
+  onClick: PropTypes.func,
 };
 
 export default CardIngredient;

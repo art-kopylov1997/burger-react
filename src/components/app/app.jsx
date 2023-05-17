@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import AppHeader from "../app-header";
 import Main from "../main";
+import { IngredientsContext } from "../../services/ingredientsContext";
 
 function App() {
   const URL = "https://norma.nomoreparties.space/api/ingredients";
@@ -36,7 +37,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <IngredientsContext.Provider value={state.ingredients}>
       {state.hasError ? (
         <div className="text text_type_main-large p-20">
           Кажется произошла ошибка, попробуйте перезагрузить страницу
@@ -44,10 +45,10 @@ function App() {
       ) : (
         <>
           <AppHeader />
-          <Main ingredients={state.ingredients} />
+          <Main />
         </>
       )}
-    </>
+    </IngredientsContext.Provider>
   );
 }
 

@@ -37,7 +37,7 @@ function App() {
   }, []);
 
   return (
-    <IngredientsContext.Provider value={state.ingredients}>
+    <>
       {state.hasError ? (
         <div className="text text_type_main-large p-20">
           Кажется произошла ошибка, попробуйте перезагрузить страницу
@@ -45,10 +45,12 @@ function App() {
       ) : (
         <>
           <AppHeader />
-          <Main />
+          <IngredientsContext.Provider value={state.ingredients}>
+            <Main />
+          </IngredientsContext.Provider>
         </>
       )}
-    </IngredientsContext.Provider>
+    </>
   );
 }
 

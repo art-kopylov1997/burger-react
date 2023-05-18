@@ -59,9 +59,9 @@ const BurgerConstructor = () => {
     });
   };
 
-  const newOrder = (payload) => {
+  const newOrder = async (payload) => {
     openModal();
-    post(payload);
+    await post(payload);
   };
 
   return (
@@ -131,7 +131,8 @@ const BurgerConstructor = () => {
           </Button>
           {isModalOpen && (
             <Modal headerText="" closeModal={closeModal}>
-              <OrderDetails />
+              {/* Тут надо передать номер заказа из post запроса, не пойму как получить  */}
+              <OrderDetails numberOrder={1231} />
             </Modal>
           )}
         </div>

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 export const initialState = {
   total: 0,
-  idsIngredients: [],
+  idsIngredients: { ingredients: [] },
 };
 
 function reducer(state, action) {
@@ -10,7 +10,12 @@ function reducer(state, action) {
     case "setTotal":
       return { ...state, total: action.payload };
     case "setIdsIngredients":
-      return { ...state, idsIngredients: action.payload };
+      return {
+        ...state,
+        idsIngredients: {
+          ingredients: action.payload,
+        },
+      };
     default:
       throw new Error(`Wrong type of action: ${action.type}`);
   }
@@ -19,7 +24,9 @@ function reducer(state, action) {
 reducer.propTypes = {
   initialState: {
     total: PropTypes.number,
-    idsIngredients: PropTypes.arrayOf(PropTypes.string),
+    idsIngredients: {
+      ingredients: PropTypes.arrayOf(PropTypes.string),
+    },
   },
 };
 

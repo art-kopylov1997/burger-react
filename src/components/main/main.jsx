@@ -1,20 +1,14 @@
 import classes from "./main.module.css";
 import BurgerIngredients from "../burger-ingredients";
 import BurgerConstructor from "../burger-constructor";
-import ingredientPropTypes from "../../utils/types";
-import PropTypes from "prop-types";
 
-function Main({ ingredients }) {
+function Main() {
   return (
     <main className={classes.root}>
-      <BurgerIngredients ingredients={ingredients} />
-      <BurgerConstructor ingredients={ingredients} />
+      <BurgerIngredients />
+      <BurgerConstructor />
     </main>
   );
 }
-
-Main.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes),
-};
 
 export default Main;

@@ -1,4 +1,12 @@
-.content {
+.section {
+  min-width: 580px;
+}
+
+.contentMain {
+  min-height: 720px;
+}
+
+.contentIngredients {
   min-width: 580px;
   height: 45vh;
   overflow: auto;

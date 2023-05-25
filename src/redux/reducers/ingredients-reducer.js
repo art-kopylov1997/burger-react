@@ -42,11 +42,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsFailed: false,
-        // ingredients: [...action.payload],
-        ingredients: [...action.payload].map((el) => {
-          el.productId = ++action.productId;
-          return el;
-        }),
+        ingredients: [...action.payload],
         ingredientsRequest: false,
         isLoading: false,
         isError: false,

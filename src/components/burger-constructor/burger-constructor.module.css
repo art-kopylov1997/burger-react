@@ -8,13 +8,9 @@
 
 .contentIngredients {
   min-width: 580px;
-  height: 45vh;
+  height: 55vh;
   overflow: auto;
-}
-
-.elementWrapper {
-  display: flex;
-  align-items: center;
+  border: 2px solid;
 }
 
 .checkoutBlock {

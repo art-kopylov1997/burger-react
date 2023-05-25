@@ -2,9 +2,10 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
-  SET_INGREDIENTS_CONSTRUCTOR,
-  ADD_INGREDIENTS_DETAILS,
-  DEL_INGREDIENTS_DETAILS,
+  ADD_INGREDIENT_CONSTRUCTOR,
+  DEL_INGREDIENT_CONSTRUCTOR,
+  FILL_CURRENT_INGREDIENT,
+  CLEAR_CURRENT_INGREDIENT,
   SET_ORDER_NUMBER,
 } from "../action-types/action-types";
 import getIngredientsRequest from "../../services/api/getIngredientsRequest";
@@ -15,10 +16,12 @@ export function getIngredients() {
       type: GET_INGREDIENTS_REQUEST,
     });
     getIngredientsRequest().then((res) => {
+      const productId = 0;
       if (res && res.success) {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
           payload: res.data,
+          productId,
         });
       } else {
         dispatch({
@@ -29,28 +32,37 @@ export function getIngredients() {
   };
 }
 
-export function setIngredientsConstructor(payload) {
+export function addIngredientConstructor(payload) {
   return function (dispatch) {
     dispatch({
-      type: SET_INGREDIENTS_CONSTRUCTOR,
+      type: ADD_INGREDIENT_CONSTRUCTOR,
       payload,
     });
   };
 }
 
-export function addIngredientDetails(payload) {
+export function delIngredientConstructor(index) {
   return function (dispatch) {
     dispatch({
-      type: ADD_INGREDIENTS_DETAILS,
+      type: DEL_INGREDIENT_CONSTRUCTOR,
+      index,
+    });
+  };
+}
+
+export function fillCurrentIngredient(payload) {
+  return function (dispatch) {
+    dispatch({
+      type: FILL_CURRENT_INGREDIENT,
       payload,
     });
   };
 }
 
-export function delIngredientDetails() {
+export function clearCurrentIngredient() {
   return function (dispatch) {
     dispatch({
-      type: DEL_INGREDIENTS_DETAILS,
+      type: CLEAR_CURRENT_INGREDIENT,
     });
   };
 }

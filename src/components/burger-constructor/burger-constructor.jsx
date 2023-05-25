@@ -1,137 +1,98 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useModal } from "../../hooks/useModal";
+import { useDispatch, useSelector } from "react-redux";
+import { useDrop } from "react-dnd";
+
 import classes from "./burger-constructor.module.css";
+
 import {
-  DragIcon,
-  ConstructorElement,
-  CurrencyIcon,
   Button,
+  CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal";
 import OrderDetails from "../order-details";
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
 import createOrderRequest from "../../services/api/createOrderRequest";
-import { useSelector, useDispatch } from "react-redux";
 import {
-  setIngredientsConstructor,
+  addIngredientConstructor,
+  delIngredientConstructor,
   setOrderNumber,
-} from "../../redux/action-creators/actionCreators";
+} from "../../redux/action-creators/action-creators";
+import ConstructorIngredient from "../constructor-ingredient";
 
 const BurgerConstructor = () => {
-  const { ingredientsConstructor, orderNumber, isLoading, isError } =
-    useSelector((state) => state.ingredients);
+  const { ingredientsConstructor, orderNumber } = useSelector(
+    (state) => state.ingredients
+  );
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (ingredients.length > 0) {
-  //     getTotalPrice();
-  //     getIdsIngredients();
-  //     getBunIngredients();
-  //   }
-  // }, [ingredients]);
-  //
-  // const getTotalPrice = () => {
-  //   const priceNotBuns = ingredients
-  //     .filter((el) => el.type !== "bun")
-  //     .map((el) => el.price)
-  //     .reduce((a, b) => a + b);
-  //
-  //   const priceBunCrator = ingredients.find(
-  //     (el) => el.name === "Краторная булка N-200i"
-  //   ).price;
-  //
-  //   dispatchReduce({
-  //     type: "setTotal",
-  //     payload: priceNotBuns + priceBunCrator * 2,
-  //   });
-  // };
-  //
-  // const getIdsIngredients = () => {
-  //   const idsNotBuns = ingredients
-  //     .filter((el) => el.type !== "bun")
-  //     .map((el) => el._id);
-  //
-  //   const idsBuns = ingredients
-  //     .filter((el) => el.name === "Краторная булка N-200i")
-  //     .map((el) => el._id);
-  //
-  //   dispatchReduce({
-  //     type: "setIdsIngredients",
-  //     payload: [...idsBuns, ...idsNotBuns, ...idsBuns],
-  //   });
-  // };
-  //
-  // const getBunIngredients = () => {
-  //   const bunIngredient = ingredients.find(
-  //     (ingredient) => ingredient.name === "Краторная булка N-200i"
-  //   );
-  //
-  //   dispatchReduce({
-  //     type: "setBunIngredient",
-  //     payload: { ...bunIngredient },
-  //   });
-  // };
+  useEffect(() => {
+    setCountOrder();
+  }, [ingredientsConstructor]);
 
-  // const newOrder = async (payload) => {
-  //   const data = await createOrderRequest(payload);
-  //   const result = data.order.number;
-  //   dispatch(setOrderNumber(result));
-  //   openModal();
-  // };
+  const createNewOrder = async (payload) => {
+    const data = await createOrderRequest(payload);
+    const result = data.order.number;
+    dispatch(setOrderNumber(result));
+    openModal();
+  };
+
+  const setCountOrder = () => {
+    const prices = ingredientsConstructor.map((el) => el.price);
+    const newCount = prices.reduce((acc, number) => acc + number, 0);
+    dispatch(setOrderNumber(newCount));
+  };
+
+  const onDropHandler = (payload) => {
+    dispatch(addIngredientConstructor(payload));
+
+    //
+  };
+
+  const deleteConstructorElement = (index) => {
+    dispatch(delIngredientConstructor(index));
+  };
+
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      onDropHandler(item);
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+  });
+
+  const borderColor = isHover ? "lightgreen" : "transparent";
 
   return (
     <section className={classes.section}>
       <div className="mt-25">
         <div className={classes.contentMain}>
-          {/*  <ConstructorElement*/}
-          {/*    extraClass="ml-5 mb-1"*/}
-          {/*    type="top"*/}
-          {/*    isLocked={true}*/}
-          {/*    text={`${state.bunIngredient.name} (верх)`}*/}
-          {/*    price={state.bunIngredient.price}*/}
-          {/*    thumbnail={state.bunIngredient.image}*/}
-          {/*  />*/}
-          <div className={classes.contentIngredients}>
-            {!isLoading &&
-              !isError &&
-              ingredientsConstructor
-                .filter((ingredient) => ingredient.type !== "bun")
-                .map((ingredient) => (
-                  <div
-                    key={ingredient._id}
-                    className={`${classes.elementWrapper} mt-4 mb-4 mr-2`}
-                  >
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                      thumbnail={ingredient.image}
-                      price={ingredient.price}
-                      text={ingredient.name}
-                    />
-                  </div>
-                ))}
+          <div
+            className={classes.contentIngredients}
+            ref={dropTarget}
+            style={{ borderColor }}
+          >
+            <ConstructorIngredient
+              elements={ingredientsConstructor}
+              deleteItem={deleteConstructorElement}
+            />
           </div>
-          {/*  <ConstructorElement*/}
-          {/*    extraClass="ml-5 mb-1"*/}
-          {/*    type="bottom"*/}
-          {/*    isLocked={true}*/}
-          {/*    text={`${state.bunIngredient.name} (низ)`}*/}
-          {/*    price={state.bunIngredient.price}*/}
-          {/*    thumbnail={state.bunIngredient.image}*/}
-          {/*  />*/}
         </div>
         <div className={`${classes.checkoutBlock} mt-10`}>
           <div className={`${classes.price} text text_type_main-large mr-10`}>
-            {/*{state.total}*/}
+            {orderNumber}
             <CurrencyIcon type="primary" />
           </div>
           <Button
             htmlType="button"
             type="primary"
             size="large"
-            // onClick={() => newOrder(state.idsIngredients)}
+            onClick={() => createNewOrder(ingredientsConstructor)}
           >
             Оформить заказ
           </Button>

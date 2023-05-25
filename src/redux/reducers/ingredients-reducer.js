@@ -2,14 +2,15 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
-  SET_INGREDIENTS_CONSTRUCTOR,
-  ADD_INGREDIENTS_DETAILS,
-  DEL_INGREDIENTS_DETAILS,
+  ADD_INGREDIENT_CONSTRUCTOR,
+  DEL_INGREDIENT_CONSTRUCTOR,
+  FILL_CURRENT_INGREDIENT,
+  CLEAR_CURRENT_INGREDIENT,
   SET_ORDER_NUMBER,
 } from "../action-types/action-types";
 
 export const initialState = {
-  // список всех полученных ингредиентов
+  // список всех полученных ингредиентов и флаги для API
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
@@ -41,7 +42,11 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsFailed: false,
-        ingredients: [...action.payload],
+        // ingredients: [...action.payload],
+        ingredients: [...action.payload].map((el) => {
+          el.productId = ++action.productId;
+          return el;
+        }),
         ingredientsRequest: false,
         isLoading: false,
         isError: false,
@@ -56,18 +61,31 @@ export const ingredientsReducer = (state = initialState, action) => {
         isError: true,
       };
     }
-    case SET_INGREDIENTS_CONSTRUCTOR: {
+    case ADD_INGREDIENT_CONSTRUCTOR: {
       return {
         ...state,
-        ingredientsConstructor: [...action.payload],
+        ingredientsConstructor: [
+          ...state.ingredientsConstructor,
+          action.payload,
+        ],
       };
     }
-    case ADD_INGREDIENTS_DETAILS:
+    case DEL_INGREDIENT_CONSTRUCTOR: {
+      return {
+        ...state,
+        ingredientsConstructor: [
+          ...state.ingredientsConstructor.filter(
+            (ingredient, index) => index !== action.index
+          ),
+        ],
+      };
+    }
+    case FILL_CURRENT_INGREDIENT:
       return {
         ...state,
         currentIngredient: action.payload,
       };
-    case DEL_INGREDIENTS_DETAILS:
+    case CLEAR_CURRENT_INGREDIENT:
       return {
         ...state,
         currentIngredient: {},

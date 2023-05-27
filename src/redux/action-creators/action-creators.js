@@ -34,18 +34,35 @@ export function getIngredients() {
 
 export function addIngredientConstructor(payload) {
   return function (dispatch) {
-    dispatch({
-      type: ADD_INGREDIENT_CONSTRUCTOR,
-      payload,
-    });
+    if (payload.type === "bun") {
+      dispatch({
+        type: ADD_INGREDIENT_CONSTRUCTOR,
+        payload: {
+          ...payload,
+          elementProperty: "top",
+        },
+      });
+      dispatch({
+        type: ADD_INGREDIENT_CONSTRUCTOR,
+        payload: {
+          ...payload,
+          elementProperty: "bottom",
+        },
+      });
+    } else {
+      dispatch({
+        type: ADD_INGREDIENT_CONSTRUCTOR,
+        payload: { ...payload, elementProperty: "draggable" },
+      });
+    }
   };
 }
 
-export function delIngredientConstructor(index) {
+export function delIngredientConstructor(id) {
   return function (dispatch) {
     dispatch({
       type: DEL_INGREDIENT_CONSTRUCTOR,
-      index,
+      id,
     });
   };
 }

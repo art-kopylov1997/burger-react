@@ -71,7 +71,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         ingredientsConstructor: [
           ...state.ingredientsConstructor.filter(
-            (ingredient, index) => index !== action.index
+            (ingredient) => ingredient.generatedId !== action.id
           ),
         ],
       };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useModal } from "../../hooks/useModal";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
@@ -27,32 +27,12 @@ const BurgerConstructor = () => {
     (state) => state.ingredients
   );
   const { isModalOpen, openModal, closeModal } = useModal();
-  const [bunsConstructor, setBunsConstructor] = useState([{}]);
-  // const [bunsConstructor, setBunsConstructor] = useState({});
-  const [notBuns, setNotBuns] = useState([]);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     setCountOrder();
-    bunsFromConstructor();
-    notBunsArray();
   }, [ingredientsConstructor]);
-
-  const bunsFromConstructor = () => {
-    const bunsForConstructor = ingredientsConstructor.filter((el) => {
-      return el.type === "bun";
-    });
-
-    setBunsConstructor(bunsForConstructor);
-  };
-
-  const notBunsArray = () => {
-    const notBunsArr = ingredientsConstructor.filter((el) => {
-      return el.type !== "bun";
-    });
-    setNotBuns(notBunsArr);
-  };
 
   const createNewOrder = async (payload) => {
     const data = await createOrderRequest(payload);
@@ -68,11 +48,21 @@ const BurgerConstructor = () => {
   };
 
   const onDropHandler = (payload) => {
-    dispatch(addIngredientConstructor(payload));
+    if (payload.type === "bun") {
+      ingredientsConstructor
+        .filter((ingredient) => ingredient.type === "bun")
+        .forEach((ingredient) =>
+          deleteConstructorElement(ingredient.generatedId)
+        );
+    }
+
+    const generatedId = "id" + Math.random().toString(16).slice(2);
+
+    dispatch(addIngredientConstructor({ ...payload, generatedId }));
   };
 
-  const deleteConstructorElement = (index) => {
-    dispatch(delIngredientConstructor(index));
+  const deleteConstructorElement = (id) => {
+    dispatch(delIngredientConstructor(id));
   };
 
   const [{ isHover }, dropTarget] = useDrop({
@@ -87,40 +77,52 @@ const BurgerConstructor = () => {
 
   const borderColor = isHover ? "lightgreen" : "transparent";
 
+  const TOP_BUN = ingredientsConstructor.find(
+    (ingredient) => ingredient.elementProperty === "top"
+  );
+
+  const DRAGGABLE_INGREDIENTS = ingredientsConstructor.filter(
+    (ingredient) => ingredient.elementProperty === "draggable"
+  );
+
+  const BOTTOM_BUN = ingredientsConstructor.find(
+    (ingredient) => ingredient.elementProperty === "bottom"
+  );
+
   return (
     <section className={classes.section}>
       <div className="mt-25">
-        <div className={classes.contentMain}>
+        <div>
           <div
             className={classes.contentIngredients}
             ref={dropTarget}
             style={{ borderColor }}
           >
-            {/*{Object.keys(bunsConstructor).length !== 0 && (*/}
-            {bunsConstructor.length !== 0 && (
+            {TOP_BUN && (
               <div className="ml-5">
                 <ConstructorElement
-                  text={bunsConstructor[0].name + " (Верх)"}
+                  text={TOP_BUN.name + " (Верх)"}
                   isLocked={true}
-                  price={bunsConstructor[0].price}
-                  thumbnail={bunsConstructor[0].image}
-                  type="top"
+                  price={TOP_BUN.price}
+                  thumbnail={TOP_BUN.image}
+                  type={TOP_BUN.elementProperty}
                 />
               </div>
             )}
+
             <ConstructorIngredient
-              elements={notBuns}
+              elements={DRAGGABLE_INGREDIENTS}
               deleteItem={deleteConstructorElement}
             />
-            {/*{Object.keys(bunsConstructor).length !== 0 && (*/}
-            {bunsConstructor.length !== 0 && (
-                <div className="ml-5">
+
+            {BOTTOM_BUN && (
+              <div className="ml-5">
                 <ConstructorElement
-                  text={bunsConstructor[0].name + " (Верх)"}
+                  text={BOTTOM_BUN.name + " (Низ)"}
                   isLocked={true}
-                  price={bunsConstructor[0].price}
-                  thumbnail={bunsConstructor[0].image}
-                  type="bottom"
+                  price={BOTTOM_BUN.price}
+                  thumbnail={BOTTOM_BUN.image}
+                  type={BOTTOM_BUN.elementProperty}
                 />
               </div>
             )}

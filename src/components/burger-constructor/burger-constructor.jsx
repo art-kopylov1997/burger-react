@@ -34,7 +34,11 @@ const BurgerConstructor = () => {
     setCountOrder();
   }, [ingredientsConstructor]);
 
-  const createNewOrder = async (payload) => {
+  const createNewOrder = async () => {
+    const payload = { ingredients: [] };
+    const idsIngredients = ingredientsConstructor.map((el) => el._id);
+    payload.ingredients.push(...idsIngredients);
+
     const data = await createOrderRequest(payload);
     const result = data.order.number;
     dispatch(setOrderNumber(result));
@@ -137,7 +141,7 @@ const BurgerConstructor = () => {
             htmlType="button"
             type="primary"
             size="large"
-            onClick={() => createNewOrder(ingredientsConstructor)}
+            onClick={createNewOrder}
           >
             Оформить заказ
           </Button>

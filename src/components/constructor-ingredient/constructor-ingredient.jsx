@@ -13,7 +13,7 @@ const ConstructorIngredient = ({ elements, deleteItem }) => {
           key={elem.generatedId}
           className={`${classes.elementWrapper} mt-4 mb-4 mr-2`}
         >
-          {elem.elementProperty === "draggable" && <DragIcon type="primary" />}
+          <DragIcon type="primary" />
           <ConstructorElement
             thumbnail={elem.image}
             price={elem.price}

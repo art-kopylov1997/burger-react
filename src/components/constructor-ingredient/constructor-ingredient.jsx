@@ -10,8 +10,8 @@ import {
 const ConstructorIngredient = ({ elements, deleteItem }) => {
   const [{ isDrag }, dragRef] = useDrag({
     type: "ingredient",
-
     // item: elements.find(el => el.),
+
     // Не могу придумать решение.
     // В item нужно передать конкретный элемент, но как его вычислить если тут приходит много данных??
 

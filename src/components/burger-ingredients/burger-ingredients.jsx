@@ -5,11 +5,10 @@ import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
 import { useSelector } from "react-redux";
 import ListIngredients from "../list-ingredients/list-ingredients";
+import { getIngredientsState } from "../../redux/selectors/ingredient-selector";
 
 const BurgerIngredients = () => {
-  const { ingredients, isLoading, isError } = useSelector(
-    (state) => state.ingredients
-  );
+  const { ingredients, ingredientsFailed } = useSelector(getIngredientsState);
   const [currentType, setCurrentType] = useState("bun");
 
   const setTab = (tab) => {
@@ -95,7 +94,7 @@ const BurgerIngredients = () => {
       </div>
 
       <div className={classes.content} ref={primaryRef} onScroll={handleScroll}>
-        {!isLoading && !isError && (
+        {!ingredientsFailed && (
           <>
             <ListIngredients
               typeTitle={"Булки"}
@@ -123,7 +122,7 @@ const BurgerIngredients = () => {
 };
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes),
+  ingredientsSelector: PropTypes.arrayOf(ingredientPropTypes),
 };
 
 export default BurgerIngredients;

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useModal } from "../../hooks/useModal";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
@@ -15,18 +15,22 @@ import OrderDetails from "../order-details";
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
 import createOrderRequest from "../../services/api/createOrderRequest";
+import ConstructorIngredient from "../constructor-ingredient";
 import {
   addIngredientConstructor,
   delIngredientConstructor,
-  setOrderNumber,
-} from "../../redux/action-creators/action-creators";
-import ConstructorIngredient from "../constructor-ingredient";
+} from "../../redux/action-creators/ingredients-constructor-creators";
+import { getIngredientsConstructorState } from "../../redux/selectors/ingredients-constructor-selector";
+import { getOrderingState } from "../../redux/selectors/ordering-selector";
+import { setOrderCost } from "../../redux/action-creators/ordering-creators";
 
 const BurgerConstructor = () => {
-  const { ingredientsConstructor, orderNumber } = useSelector(
-    (state) => state.ingredients
+  const { ingredientsConstructor } = useSelector(
+    getIngredientsConstructorState
   );
+  const { orderCost } = useSelector(getOrderingState);
   const { isModalOpen, openModal, closeModal } = useModal();
+  const [orderNumber, setOrderNumber] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -41,14 +45,15 @@ const BurgerConstructor = () => {
 
     const data = await createOrderRequest(payload);
     const result = data.order.number;
-    dispatch(setOrderNumber(result));
+    setOrderNumber(result);
+    dispatch(setOrderCost(result));
     openModal();
   };
 
   const setCountOrder = () => {
     const prices = ingredientsConstructor.map((el) => el.price);
     const newCount = prices.reduce((acc, number) => acc + number, 0);
-    dispatch(setOrderNumber(newCount));
+    dispatch(setOrderCost(newCount));
   };
 
   const onDropHandler = (payload) => {
@@ -134,7 +139,7 @@ const BurgerConstructor = () => {
         </div>
         <div className={`${classes.checkoutBlock} mt-10`}>
           <div className={`${classes.price} text text_type_main-large mr-10`}>
-            {orderNumber}
+            {orderCost}
             <CurrencyIcon type="primary" />
           </div>
           <Button

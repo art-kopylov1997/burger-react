@@ -11,15 +11,18 @@ import ingredientPropTypes from "../../utils/types";
 import Modal from "../modal";
 import IngredientDetails from "../ingredient-details";
 import {
-  fillCurrentIngredient,
   clearCurrentIngredient,
-} from "../../redux/action-creators/action-creators";
+  fillCurrentIngredient,
+} from "../../redux/action-creators/current-ingredient-creators";
+import { getIngredientsConstructorState } from "../../redux/selectors/ingredients-constructor-selector";
+import { getCurrentIngredientState } from "../../redux/selectors/current-ingredient-selector";
 
 const CardIngredient = ({ ingredient }) => {
   const { name, image, price } = ingredient;
   const { isModalOpen, openModal, closeModal } = useModal();
-  const { currentIngredient, ingredientsConstructor } = useSelector(
-    (state) => state.ingredients
+  const { currentIngredient } = useSelector(getCurrentIngredientState);
+  const { ingredientsConstructor } = useSelector(
+    getIngredientsConstructorState
   );
   const [ingredientCounter, setIngredientCounter] = useState(0);
 

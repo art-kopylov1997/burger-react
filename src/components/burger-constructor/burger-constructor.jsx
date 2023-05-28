@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useModal } from "../../hooks/useModal";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
+import { v4 as uuidv4 } from "uuid";
 
 import classes from "./burger-constructor.module.css";
 
@@ -15,9 +16,10 @@ import OrderDetails from "../order-details";
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
 import createOrderRequest from "../../services/api/createOrderRequest";
-import ConstructorIngredient from "../constructor-ingredient";
+import ConstructorIngredientList from "../constructor-ingredient-list";
 import {
   addIngredientConstructor,
+  clearListConstructor,
   delIngredientConstructor,
 } from "../../redux/action-creators/ingredients-constructor-creators";
 import { getIngredientsConstructorState } from "../../redux/selectors/ingredients-constructor-selector";
@@ -25,7 +27,7 @@ import { getOrderingState } from "../../redux/selectors/ordering-selector";
 import { setOrderCost } from "../../redux/action-creators/ordering-creators";
 
 const BurgerConstructor = () => {
-  const { ingredientsConstructor } = useSelector(
+  const { ingredientsConstructor, bunsConstructor } = useSelector(
     getIngredientsConstructorState
   );
   const { orderCost } = useSelector(getOrderingState);
@@ -36,66 +38,65 @@ const BurgerConstructor = () => {
 
   useEffect(() => {
     setCountOrder();
-  }, [ingredientsConstructor]);
+  }, [ingredientsConstructor, bunsConstructor]);
 
   const createNewOrder = async () => {
     const payload = { ingredients: [] };
-    const idsIngredients = ingredientsConstructor.map((el) => el._id);
+    const idsIngredientsConstructor = ingredientsConstructor.map(
+      (el) => el._id
+    );
+    const idsBunsConstructor = bunsConstructor.map((el) => el._id);
+    const idsIngredients = [
+      ...idsIngredientsConstructor,
+      ...idsBunsConstructor,
+    ];
     payload.ingredients.push(...idsIngredients);
 
     const data = await createOrderRequest(payload);
     const result = data.order.number;
-    setOrderNumber(result);
-    dispatch(setOrderCost(result));
-    openModal();
+
+    try {
+      setOrderNumber(result);
+      dispatch(clearListConstructor());
+      openModal();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const setCountOrder = () => {
-    const prices = ingredientsConstructor.map((el) => el.price);
+    const pricesIngredientsConstructor = ingredientsConstructor.map(
+      (el) => el.price
+    );
+    const pricesBunsConstructor = bunsConstructor.map((el) => el.price);
+    const prices = [...pricesIngredientsConstructor, ...pricesBunsConstructor];
     const newCount = prices.reduce((acc, number) => acc + number, 0);
     dispatch(setOrderCost(newCount));
   };
 
   const onDropHandler = (payload) => {
-    if (payload.type === "bun") {
-      ingredientsConstructor
-        .filter((ingredient) => ingredient.type === "bun")
-        .forEach((ingredient) =>
-          deleteConstructorElement(ingredient.generatedId)
-        );
-    }
-
-    const generatedId = "id" + Math.random().toString(16).slice(2);
-
-    dispatch(addIngredientConstructor({ ...payload, generatedId }));
+    const dragId = uuidv4();
+    dispatch(addIngredientConstructor({ ...payload, dragId }));
   };
 
   const deleteConstructorElement = (id) => {
     dispatch(delIngredientConstructor(id));
   };
 
-  const [{ isHover }, dropTarget] = useDrop({
+  const [{ borderColor }, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item) {
       onDropHandler(item);
     },
     collect: (monitor) => ({
-      isHover: monitor.isOver(),
+      borderColor: monitor.isOver() ? "lightgreen" : "transparent",
     }),
   });
 
-  const borderColor = isHover ? "lightgreen" : "transparent";
-
-  const TOP_BUN = ingredientsConstructor.find(
-    (ingredient) => ingredient.elementProperty === "top"
-  );
+  const BUN = bunsConstructor.find((ingredient) => ingredient.type === "bun");
 
   const DRAGGABLE_INGREDIENTS = ingredientsConstructor.filter(
     (ingredient) => ingredient.elementProperty === "draggable"
-  );
-
-  const BOTTOM_BUN = ingredientsConstructor.find(
-    (ingredient) => ingredient.elementProperty === "bottom"
   );
 
   return (
@@ -107,31 +108,31 @@ const BurgerConstructor = () => {
             ref={dropTarget}
             style={{ borderColor }}
           >
-            {TOP_BUN && (
+            {BUN && (
               <div className="ml-5">
                 <ConstructorElement
-                  text={TOP_BUN.name + " (Верх)"}
+                  text={BUN.name + " (Верх)"}
                   isLocked={true}
-                  price={TOP_BUN.price}
-                  thumbnail={TOP_BUN.image}
-                  type={TOP_BUN.elementProperty}
+                  price={BUN.price}
+                  thumbnail={BUN.image}
+                  type={"top"}
                 />
               </div>
             )}
 
-            <ConstructorIngredient
-              elements={DRAGGABLE_INGREDIENTS}
+            <ConstructorIngredientList
+              ingredients={DRAGGABLE_INGREDIENTS}
               deleteItem={deleteConstructorElement}
             />
 
-            {BOTTOM_BUN && (
+            {BUN && (
               <div className="ml-5">
                 <ConstructorElement
-                  text={BOTTOM_BUN.name + " (Низ)"}
+                  text={BUN.name + " (Низ)"}
                   isLocked={true}
-                  price={BOTTOM_BUN.price}
-                  thumbnail={BOTTOM_BUN.image}
-                  type={BOTTOM_BUN.elementProperty}
+                  price={BUN.price}
+                  thumbnail={BUN.image}
+                  type={"bottom"}
                 />
               </div>
             )}
@@ -147,6 +148,7 @@ const BurgerConstructor = () => {
             type="primary"
             size="large"
             onClick={createNewOrder}
+            disabled={!BUN}
           >
             Оформить заказ
           </Button>

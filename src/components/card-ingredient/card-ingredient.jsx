@@ -26,19 +26,17 @@ const CardIngredient = ({ ingredient }) => {
   );
   const [ingredientCounter, setIngredientCounter] = useState(0);
 
-  const [{ isDrag }, dragRef] = useDrag({
+  const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
     item: ingredient,
     collect: (monitor) => ({
-      isDrag: monitor.isDragging(),
+      opacity: monitor.isDragging() ? 0.5 : 1,
     }),
   });
 
   useEffect(() => {
     calculateCount();
   }, [ingredientsConstructor, setIngredientCounter]);
-
-  const opacity = isDrag ? 0.5 : 1;
 
   const dispatch = useDispatch();
 

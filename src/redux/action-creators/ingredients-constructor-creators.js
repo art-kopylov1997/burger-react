@@ -6,21 +6,19 @@ export const UPDATE_LIST_INGREDIENTS_CONSTRUCTOR =
 export const CLEAR_LIST_INGREDIENTS_CONSTRUCTOR =
   "CLEAR_LIST_INGREDIENTS_CONSTRUCTOR";
 
-export function addIngredientConstructor(payload) {
-  return function (dispatch) {
-    if (payload.type === "bun") {
-      dispatch({
-        type: ADD_BUN_CONSTRUCTOR,
-        payload: [payload, payload],
-      });
-    } else {
-      dispatch({
-        type: ADD_INGREDIENT_CONSTRUCTOR,
-        payload: { ...payload, elementProperty: "draggable" },
-      });
-    }
-  };
-}
+export const addIngredientConstructor = (payload) => {
+  if (payload.type === "bun") {
+    return {
+      type: ADD_BUN_CONSTRUCTOR,
+      payload: [payload, payload],
+    };
+  } else {
+    return {
+      type: ADD_INGREDIENT_CONSTRUCTOR,
+      payload: { ...payload, elementProperty: "draggable" },
+    };
+  }
+};
 
 export const delIngredientConstructor = (id) => ({
   type: DEL_INGREDIENT_CONSTRUCTOR,

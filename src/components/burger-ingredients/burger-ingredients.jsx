@@ -1,32 +1,70 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import classes from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import CardIngredient from "../card-ingredient";
-import Modal from "../modal";
-import IngredientDetails from "../ingredient-details";
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
-import { useModal } from "../../hooks/useModal";
-import { IngredientsContext } from "../../services/ingredientsContext";
+import { useSelector } from "react-redux";
+import ListIngredients from "../list-ingredients/list-ingredients";
+import { getIngredientsState } from "../../redux/selectors/ingredient-selector";
 
 const BurgerIngredients = () => {
-  const ingredients = useContext(IngredientsContext);
-  const [currentType, setCurrentType] = useState("Булки");
-  const [currentIngredient, setCurrentIngredient] = useState(null);
-  const { isModalOpen, openModal, closeModal } = useModal();
+  const { ingredients, ingredientsFailed } = useSelector(getIngredientsState);
+  const [currentType, setCurrentType] = useState("bun");
 
-  const typeAdapter = (type) => {
-    const isBun = currentType === "Булки" && type === "bun";
-    const isSauce = currentType === "Соусы" && type === "sauce";
-    const isMain = currentType === "Начинки" && type === "main";
-
-    return isBun || isSauce || isMain;
+  const setTab = (tab) => {
+    setCurrentType(tab);
+    const element = document.getElementById(tab);
+    if (element) element.scrollIntoView({ behavior: "smooth" });
   };
 
-  const passIngredientToModal = (ingredient) => {
-    openModal();
-    setCurrentIngredient(ingredient);
+  const listBun = ingredients.filter((el) => el.type === "bun");
+  const listMain = ingredients.filter((el) => el.type === "main");
+  const listSauce = ingredients.filter((el) => el.type === "sauce");
+
+  const primaryRef = useRef(null);
+  const bunRef = useRef(null);
+  const sauceRef = useRef(null);
+  const mainRef = useRef(null);
+
+  const handleScroll = () => {
+    if (
+      primaryRef &&
+      bunRef &&
+      sauceRef &&
+      mainRef &&
+      primaryRef.current &&
+      bunRef.current &&
+      sauceRef.current &&
+      mainRef.current
+    ) {
+      const bunDistance = Math.abs(
+        primaryRef.current.getBoundingClientRect().top -
+          bunRef.current.getBoundingClientRect().top
+      );
+      const sauceDistance = Math.abs(
+        primaryRef.current.getBoundingClientRect().top -
+          sauceRef.current.getBoundingClientRect().top
+      );
+      const mainDistance = Math.abs(
+        primaryRef.current.getBoundingClientRect().top -
+          mainRef.current.getBoundingClientRect().top
+      );
+      const minDistance = Math.min(bunDistance, sauceDistance, mainDistance);
+      const currentHeader =
+        minDistance === bunDistance
+          ? "bun"
+          : minDistance === sauceDistance
+          ? "sauce"
+          : "main";
+      setCurrentType((prevState) =>
+        currentHeader === prevState ? prevState : currentHeader
+      );
+    }
   };
+
+  useEffect(() => {
+    document.getElementById(currentType).scrollIntoView();
+  }, [currentType]);
 
   return (
     <section>
@@ -34,51 +72,57 @@ const BurgerIngredients = () => {
       <div className={classes.tabBlock}>
         <Tab
           value="Булки"
-          active={currentType === "Булки"}
-          onClick={setCurrentType}
+          active={currentType === "bun"}
+          onClick={() => setTab("bun")}
         >
           Булки
         </Tab>
         <Tab
           value="Соусы"
-          active={currentType === "Соусы"}
-          onClick={setCurrentType}
+          active={currentType === "sauce"}
+          onClick={() => setTab("sauce")}
         >
           Соусы
         </Tab>
         <Tab
           value="Начинки"
-          active={currentType === "Начинки"}
-          onClick={setCurrentType}
+          active={currentType === "main"}
+          onClick={() => setTab("main")}
         >
           Начинки
         </Tab>
       </div>
 
-      <h3 className="text text_type_main-medium mt-10">{currentType}</h3>
-      <div className={classes.content}>
-        {ingredients
-          .filter((ingredient) => typeAdapter(ingredient.type))
-          .map((ingredient) => (
-            <CardIngredient
-              key={ingredient._id}
-              ingredient={ingredient}
-              onClick={() => passIngredientToModal(ingredient)}
+      <div className={classes.content} ref={primaryRef} onScroll={handleScroll}>
+        {!ingredientsFailed && (
+          <>
+            <ListIngredients
+              typeTitle={"Булки"}
+              ingredients={listBun}
+              id={"bun"}
+              subRef={bunRef}
             />
-          ))}
+            <ListIngredients
+              typeTitle={"Соусы"}
+              ingredients={listSauce}
+              id={"sauce"}
+              subRef={sauceRef}
+            />
+            <ListIngredients
+              typeTitle={"Начинки"}
+              ingredients={listMain}
+              id={"main"}
+              subRef={mainRef}
+            />
+          </>
+        )}
       </div>
-
-      {isModalOpen && (
-        <Modal title="Детали ингредиента" closeModal={closeModal}>
-          <IngredientDetails ingredient={currentIngredient} />
-        </Modal>
-      )}
     </section>
   );
 };
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes),
+  ingredientsSelector: PropTypes.arrayOf(ingredientPropTypes),
 };
 
 export default BurgerIngredients;

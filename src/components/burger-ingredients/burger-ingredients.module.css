@@ -1,6 +1,6 @@
 .content {
   display: grid;
-  grid-template-columns: repeat(2, minmax(auto, 272px));
+  /*grid-template-columns: repeat(2, minmax(auto, 272px));*/
   gap: 24px;
   height: 50vh;
   overflow-x: hidden;

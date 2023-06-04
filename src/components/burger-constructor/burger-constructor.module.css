@@ -1,12 +1,12 @@
-.content {
+.section {
   min-width: 580px;
-  height: 45vh;
-  overflow: auto;
 }
 
-.elementWrapper {
-  display: flex;
-  align-items: center;
+.contentIngredients {
+  min-width: 580px;
+  height: 55vh;
+  overflow: auto;
+  border: 2px solid;
 }
 
 .checkoutBlock {

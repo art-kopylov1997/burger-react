@@ -2,14 +2,12 @@ import classes from "./ingredient-details.module.css";
 import ingredientPropTypes from "../../utils/types";
 
 const IngredientDetails = ({ ingredient }) => {
+  const { name, image, calories, proteins, fat, carbohydrates } = ingredient;
+
   return (
     <div className={classes.root}>
-      <img
-        className={classes.ingredientImage}
-        src={ingredient.image}
-        alt={ingredient.name}
-      />
-      <h2 className="text text_type_main-medium mb-8">{ingredient.name}</h2>
+      <img className={classes.ingredientImage} src={image} alt={name} />
+      <h2 className="text text_type_main-medium mb-8">{name}</h2>
 
       <div className={classes.nutritionalBlock}>
         <div className={classes.nutritionals}>
@@ -17,7 +15,7 @@ const IngredientDetails = ({ ingredient }) => {
             Калории, ккал
           </span>
           <p className="text text_type_digits-default text_color_inactive">
-            {ingredient.calories}
+            {calories}
           </p>
         </div>
         <div className={classes.nutritionals}>
@@ -25,7 +23,7 @@ const IngredientDetails = ({ ingredient }) => {
             Белки, г
           </span>
           <p className="text text_type_digits-default text_color_inactive">
-            {ingredient.proteins}
+            {proteins}
           </p>
         </div>
         <div className={classes.nutritionals}>
@@ -33,7 +31,7 @@ const IngredientDetails = ({ ingredient }) => {
             Жиры, г
           </span>
           <p className="text text_type_digits-default text_color_inactive">
-            {ingredient.fat}
+            {fat}
           </p>
         </div>
         <div className={classes.nutritionals}>
@@ -41,7 +39,7 @@ const IngredientDetails = ({ ingredient }) => {
             Углеводы, г
           </span>
           <p className="text text_type_digits-default text_color_inactive">
-            {ingredient.carbohydrates}
+            {carbohydrates}
           </p>
         </div>
       </div>

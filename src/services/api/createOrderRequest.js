@@ -1,6 +1,6 @@
 const URL = "https://norma.nomoreparties.space/api/orders";
 
-const createOrder = async (payload) => {
+const createOrderRequest = async (payload) => {
   try {
     const response = await fetch(URL, {
       method: "POST",
@@ -14,4 +14,4 @@ const createOrder = async (payload) => {
   }
 };
 
-export default createOrder;
+export default createOrderRequest;

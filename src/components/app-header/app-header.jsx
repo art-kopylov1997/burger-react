@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import classes from "./app-header.module.css";
 import {
   Logo,
@@ -22,10 +23,16 @@ const AppHeader = () => {
 
       <Logo />
 
-      <div className={`${classes.wrapperNav} pr-25`}>
-        <ProfileIcon type="secondary" />
-        <span>Личный кабинет</span>
-      </div>
+      <NavLink
+        to="/profile"
+        className={classes.link}
+        activeClassName={classes.activeLink}
+      >
+        <div className={`${classes.wrapperNav} pr-25`}>
+          <ProfileIcon type="secondary" />
+          <span>Личный кабинет</span>
+        </div>
+      </NavLink>
     </header>
   );
 };

@@ -16,6 +16,15 @@
     display: flex;
 }
 
+.link {
+    text-decoration: none;
+    color: white;
+}
+
+.activeLink {
+    color: red!important;
+}
+
 .wrapperNav {
     display: flex;
     align-items: center;

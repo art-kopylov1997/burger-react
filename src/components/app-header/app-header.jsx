@@ -25,8 +25,9 @@ const AppHeader = () => {
 
       <NavLink
         to="/profile"
-        className={classes.link}
-        activeClassName={classes.activeLink}
+        className={({ isActive }) =>
+          isActive ? classes.activeLink : classes.link
+        }
       >
         <div className={`${classes.wrapperNav} pr-25`}>
           <ProfileIcon type="secondary" />

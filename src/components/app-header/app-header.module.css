@@ -22,7 +22,8 @@
 }
 
 .activeLink {
-    color: red!important;
+    text-decoration: none;
+    color: #8585AD;
 }
 
 .wrapperNav {

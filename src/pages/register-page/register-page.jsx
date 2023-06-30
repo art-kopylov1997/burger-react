@@ -4,21 +4,32 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {registrationUser} from "../../redux/action-creators/registry-creators";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { registrationUser } from "../../redux/action-creators/registry-creators";
+import registryRequest from "../../services/api/register-request";
 
 function RegisterPage() {
   const [userObject, setUserObject] = useState({
-      "email": "",
-      "password": "",
-      "name": ""
+    email: "",
+    password: "",
+    name: "",
   });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleRegistry = () => {
-      dispatch(registrationUser(userObject))
-  }
+    const data = registryRequest(userObject);
+
+    try {
+      if (data.success) {
+        dispatch(registrationUser(userObject));
+        navigate("/login", { replace: true });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -27,29 +38,41 @@ function RegisterPage() {
       <Input
         type="text"
         placeholder="Имя"
-        onChange={(e) => setUserObject(prevState => ({ ...prevState, name: e.target.value }))}
+        onChange={(e) =>
+          setUserObject((prevState) => ({ ...prevState, name: e.target.value }))
+        }
         value={userObject.name}
         extraClass="mt-6"
       />
       <Input
         type="email"
         placeholder="E-mail"
-        // onChange={(e) => setValue2(e.target.value)}
-        onChange={(e) => setUserObject(prevState => ({ ...prevState, email: e.target.value }))}
+        onChange={(e) =>
+          setUserObject((prevState) => ({
+            ...prevState,
+            email: e.target.value,
+          }))
+        }
         value={userObject.email}
         extraClass="mt-6"
       />
       <Input
         type="password"
         placeholder="Пароль"
-        // onChange={(e) => setValue3(e.target.value)}
-        onChange={(e) => setUserObject(prevState => ({ ...prevState, password: e.target.value }))}
+        onChange={(e) =>
+          setUserObject((prevState) => ({
+            ...prevState,
+            password: e.target.value,
+          }))
+        }
         icon="ShowIcon"
         value={userObject.password}
         extraClass="mt-6 mb-6"
       />
 
-      <Button htmlType="button" onClick={handleRegistry}>Зарегистрироваться</Button>
+      <Button htmlType="button" onClick={handleRegistry}>
+        Зарегистрироваться
+      </Button>
 
       <p className="text text_type_main-default text_color_inactive mt-20">
         Уже зарегистрированы?

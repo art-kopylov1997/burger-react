@@ -5,7 +5,7 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import createResetPasswordRequest from "../../services/api/createResetPassword";
+import createResetPasswordRequest from "../../services/api/create-reset-password-request";
 
 function RestorePasswordPage() {
   const [passwordValue, setPasswordValue] = useState("");

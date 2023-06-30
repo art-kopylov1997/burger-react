@@ -1,18 +1,19 @@
 .root {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .wrapper {
-    display: flex;
-    gap: 60px;
+  display: flex;
+  gap: 60px;
 }
 
 .blockMenu {
-    display: flex;
-    flex-direction: column;
-    max-width: 320px;
-    margin-top: 20px;
-    gap: 40px;
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+  margin-top: 20px;
+  gap: 40px;
 }

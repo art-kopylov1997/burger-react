@@ -1,4 +1,4 @@
-import getIngredientsRequest from "../../services/api/getIngredientsRequest";
+import getIngredientsRequest from "../../services/api/get-ingredients-request";
 
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";

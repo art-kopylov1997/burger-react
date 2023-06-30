@@ -6,7 +6,7 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import createNewEmailRequest from "../../services/api/createNewEmailRequest";
+import createNewEmailRequest from "../../services/api/create-new-email-request";
 
 function RestorePasswordPage() {
   const [value, setValue] = useState("");

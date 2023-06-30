@@ -15,7 +15,7 @@ import Modal from "../modal";
 import OrderDetails from "../order-details";
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
-import createOrderRequest from "../../services/api/createOrderRequest";
+import createOrderRequest from "../../services/api/create-order-request";
 import ConstructorIngredientList from "../constructor-ingredient-list";
 import {
   addIngredientConstructor,

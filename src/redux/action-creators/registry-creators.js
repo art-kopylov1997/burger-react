@@ -9,6 +9,7 @@ import setTokenExpirationDate from "../../helpers/local-storage-helper";
 import updateTokenRequest from "../../services/api/update-token-request";
 import getUserRequest from "../../services/api/get-user-request";
 import logoutRequest from "../../services/api/logout-request";
+import patchUserRequest from "../../services/api/patch-user-request";
 
 export const AUTH_CHECKED = "AUTH_CHECKED";
 export const SET_USER = "SET_USER";
@@ -25,6 +26,15 @@ export function checkUserAuth() {
 export function getUser() {
   return function (dispatch) {
     getUserRequest().then((res) => {
+      dispatch({ type: SET_USER, payload: res.user });
+    });
+  };
+}
+
+export function editUser(user) {
+  return function (dispatch) {
+    console.log("action user: ", user);
+    patchUserRequest(user).then((res) => {
       dispatch({ type: SET_USER, payload: res.user });
     });
   };

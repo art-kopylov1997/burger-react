@@ -1,13 +1,14 @@
+import checkResponse from "../helpers/check-response";
+
 const URL = "https://norma.nomoreparties.space/api/ingredients";
 
 const getIngredientsRequest = async () => {
-  try {
-    const response = await fetch(URL);
-    const data = await response.json();
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
+  return fetch(URL, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(checkResponse);
 };
 
 export default getIngredientsRequest;

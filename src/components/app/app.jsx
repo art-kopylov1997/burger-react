@@ -10,12 +10,14 @@ import ProfilePage from "../../pages/profile-page";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getIngredients } from "../../redux/action-creators/ingredients-creators";
+import { checkUserAuth } from "../../redux/action-creators/registry-creators";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());
+    dispatch(checkUserAuth());
   }, [dispatch]);
 
   return (

@@ -1,11 +1,34 @@
 import registryRequest from "../../services/api/register-request";
 import loginRequest from "../../services/api/login-request";
-import setCookie from "../../helpers/cookie-helper";
+import {
+  expireCookie,
+  getCookie,
+  setCookie,
+} from "../../helpers/cookie-helper";
 import setTokenExpirationDate from "../../helpers/local-storage-helper";
 import updateTokenRequest from "../../services/api/update-token-request";
+import getUserRequest from "../../services/api/get-user-request";
+import logoutRequest from "../../services/api/logout-request";
 
-export const REGISTRATION_USER = "REGISTRATION_USER";
-export const LOGIN_USER = "LOGIN_USER";
+export const AUTH_CHECKED = "AUTH_CHECKED";
+export const SET_USER = "SET_USER";
+export const LOGOUT_USER = "LOGOUT_USER";
+
+export function checkUserAuth() {
+  return function (dispatch) {
+    if (getCookie("token")) dispatch(getUser());
+
+    dispatch({ type: AUTH_CHECKED });
+  };
+}
+
+export function getUser() {
+  return function (dispatch) {
+    getUserRequest().then((res) => {
+      dispatch({ type: SET_USER, payload: res.user });
+    });
+  };
+}
 
 export function registrationUser(payload) {
   return function (dispatch) {
@@ -17,7 +40,7 @@ export function registrationUser(payload) {
         setTokenExpirationDate(15);
 
         dispatch({
-          type: REGISTRATION_USER,
+          type: SET_USER,
           payload: res.user,
         });
       } else {
@@ -40,12 +63,26 @@ export function loginUser(payload) {
         await updateTokenRequest(tokenPayload);
 
         dispatch({
-          type: LOGIN_USER,
+          type: SET_USER,
           payload: res.user,
         });
       } else {
         console.error("error: ", res);
       }
+    });
+  };
+}
+
+export function logoutUser() {
+  return function (dispatch) {
+    const logoutToken = { token: localStorage.getItem("refreshToken") };
+    logoutRequest(logoutToken).finally(() => {
+      dispatch({
+        type: LOGOUT_USER,
+      });
+
+      expireCookie("token");
+      localStorage.clear();
     });
   };
 }

@@ -1,4 +1,14 @@
-const setCookie = (name, value, options = {}) => {
+export const getCookie = (name) => {
+  const matches = document.cookie.match(
+    new RegExp(
+      "(?:^|; )" + name.replace(/([.$?*|{}()[\]\\/+^])/g, "\\$1") + "=([^;]*)"
+    )
+  );
+
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+};
+
+export const setCookie = (name, value, options = {}) => {
   options = {
     path: "/",
     ...options,
@@ -22,4 +32,6 @@ const setCookie = (name, value, options = {}) => {
   document.cookie = updatedCookie;
 };
 
-export default setCookie;
+export function expireCookie(name) {
+  setCookie(name, "", { expires: -1 });
+}

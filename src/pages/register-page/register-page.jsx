@@ -4,9 +4,9 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { registrationUser } from "../../redux/action-creators/registry-creators";
+import { registrationUser } from "../../redux/action-creators/auth-creators";
 import registryRequest from "../../services/api/register-request";
 
 function RegisterPage() {
@@ -16,7 +16,6 @@ function RegisterPage() {
     name: "",
   });
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleRegistry = () => {
     const data = registryRequest(userObject);
@@ -24,7 +23,6 @@ function RegisterPage() {
     try {
       if (data.success) {
         dispatch(registrationUser(userObject));
-        navigate("/login", { replace: true });
       }
     } catch (error) {
       console.error(error);

@@ -15,12 +15,11 @@ import {
   fillCurrentIngredient,
 } from "../../redux/action-creators/current-ingredient-creators";
 import { getIngredientsConstructorState } from "../../redux/selectors/ingredients-constructor-selector";
-import { getCurrentIngredientState } from "../../redux/selectors/current-ingredient-selector";
+import { Link, useLocation } from "react-router-dom";
 
 const CardIngredient = ({ ingredient }) => {
   const { name, image, price } = ingredient;
   const { isModalOpen, openModal, closeModal } = useModal();
-  const { currentIngredient } = useSelector(getCurrentIngredientState);
   const { ingredientsConstructor } = useSelector(
     getIngredientsConstructorState
   );
@@ -39,6 +38,7 @@ const CardIngredient = ({ ingredient }) => {
   }, [ingredientsConstructor, setIngredientCounter]);
 
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const calculateCount = () => {
     const count = ingredientsConstructor.filter(
@@ -65,27 +65,33 @@ const CardIngredient = ({ ingredient }) => {
         onClick={() => handleOpenModal(ingredient)}
         ref={dragRef}
       >
-        <div className={classes.wrapperImage}>
-          {ingredientCounter > 0 && (
-            <div
-              className={`${classes.selectedIcon} text text_type_digits-default`}
-            >
-              {ingredientCounter}
-            </div>
-          )}
-          <img className="pl-4 pr-4" src={image} alt={name} />
-        </div>
-        <span
-          className={`${classes.price} mt-1 mb-1 text text_type_digits-default`}
+        <Link
+          to={`/ingredients/${ingredient._id}`}
+          state={{ background: location }}
+          className={classes.link}
         >
-          {price} <CurrencyIcon type="primary" />
-        </span>
-        <div className="text text_type_main-default">{name}</div>
+          <div className={classes.wrapperImage}>
+            {ingredientCounter > 0 && (
+              <div
+                className={`${classes.selectedIcon} text text_type_digits-default`}
+              >
+                {ingredientCounter}
+              </div>
+            )}
+            <img className="pl-4 pr-4" src={image} alt={name} />
+          </div>
+          <span
+            className={`${classes.price} mt-1 mb-1 text text_type_digits-default`}
+          >
+            {price} <CurrencyIcon type="primary" />
+          </span>
+          <div className="text text_type_main-default">{name}</div>
+        </Link>
       </div>
 
       {isModalOpen && (
-        <Modal title="Детали ингредиента" closeModal={() => handleCloseModal()}>
-          <IngredientDetails ingredient={currentIngredient} />
+        <Modal title="Детали ингредиента" closeModal={handleCloseModal}>
+          <IngredientDetails />
         </Modal>
       )}
     </>

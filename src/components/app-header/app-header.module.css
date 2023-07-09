@@ -18,12 +18,12 @@
 
 .link {
     text-decoration: none;
-    color: white;
+    color: #8585AD;
 }
 
 .activeLink {
     text-decoration: none;
-    color: #8585AD;
+    color: #ffffff;
 }
 
 .wrapperNav {

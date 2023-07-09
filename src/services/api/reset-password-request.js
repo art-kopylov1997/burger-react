@@ -1,8 +1,8 @@
 import checkResponse from "../helpers/check-response";
 
-const URL = "https://norma.nomoreparties.space/api/password-reset";
+const URL = "https://norma.nomoreparties.space/api/password-reset/reset";
 
-const createNewEmailRequest = async (payload) => {
+const resetPasswordRequest = async (payload) => {
   return fetch(URL, {
     method: "POST",
     headers: {
@@ -12,4 +12,4 @@ const createNewEmailRequest = async (payload) => {
   }).then(checkResponse);
 };
 
-export default createNewEmailRequest;
+export default resetPasswordRequest;

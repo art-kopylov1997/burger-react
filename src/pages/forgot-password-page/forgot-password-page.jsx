@@ -1,66 +1,53 @@
 import React from "react";
-import classes from "./reset-password-page.module.css";
+import classes from "./forgor-password-page.module.css";
 import {
   Button,
-  Input,
-  PasswordInput,
+  EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Navigate, useLocation } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../../hooks/useForm";
 import { getAuthState } from "../../redux/selectors/auth-selector";
-import { resetPassword } from "../../redux/action-creators/auth-creators";
+import { sendResetPasswordEmail } from "../../redux/action-creators/auth-creators";
 
-function ResetPassword() {
+function ForgotPasswordPage() {
   const location = useLocation();
-  const { resetPasswordStarted, resetPasswordFinished } =
-    useSelector(getAuthState);
+  const { resetPasswordStarted } = useSelector(getAuthState);
   const dispatch = useDispatch();
 
   const { values, handleChange } = useForm({
-    emailCode: "",
-    password: "",
+    email: "",
   });
 
   const onSubmit = React.useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(resetPassword(values.password, values.emailCode));
+      dispatch(sendResetPasswordEmail(values.email));
     },
     [dispatch, values]
   );
 
-  if (resetPasswordFinished) {
-    return <Navigate to={"/login"} state={{ from: location }} />;
-  }
-
-  if (!resetPasswordStarted) {
-    return <Navigate to={"/forgot-password"} state={{ from: location }} />;
+  if (resetPasswordStarted) {
+    return <Navigate to={"/reset-password"} state={{ from: location }} />;
   }
 
   return (
     <form className={classes.root} onSubmit={onSubmit}>
       <p className="text text_type_main-medium">Восстановление пароля</p>
 
-      <div className={`${classes.blockInputs} mt-6`}>
-        <PasswordInput
-          name="password"
-          value={values.password}
+      <div className={`${classes.blockInput} mt-6`}>
+        <EmailInput
+          name="email"
+          value={values.email}
           onChange={handleChange}
-          placeholder="Введите новый пароль"
-        />
-        <Input
-          name="emailCode"
-          value={values.emailCode}
-          onChange={handleChange}
-          placeholder="Введите код из письма"
+          placeholder="Укажите e-mail"
         />
       </div>
 
       <div className="mt-6 mb-20">
         <Button htmlType="submit" type="primary" size="large">
-          Сохранить
+          Восстановить
         </Button>
       </div>
 
@@ -76,4 +63,4 @@ function ResetPassword() {
   );
 }
 
-export default ResetPassword;
+export default ForgotPasswordPage;

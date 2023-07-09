@@ -4,9 +4,9 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../redux/action-creators/registry-creators";
+import { loginUser } from "../../redux/action-creators/auth-creators";
 import loginRequest from "../../services/api/login-request";
 
 function LoginPage() {
@@ -16,7 +16,6 @@ function LoginPage() {
   });
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleLogin = async () => {
     const data = await loginRequest(userObject);
@@ -24,7 +23,6 @@ function LoginPage() {
     try {
       if (data.success) {
         dispatch(loginUser(userObject));
-        navigate("/", { replace: true });
       }
     } catch (error) {
       console.error(error);

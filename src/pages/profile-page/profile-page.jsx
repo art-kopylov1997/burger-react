@@ -1,23 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import classes from "./profile-page.module.css";
 import {
   Button,
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getUserState } from "../../redux/selectors/auth-selector";
+import { getAuthUserState } from "../../redux/selectors/auth-selector";
 import { useSelector, useDispatch } from "react-redux";
 import {
   editUser,
   logoutUser,
-} from "../../redux/action-creators/registry-creators";
-import { useNavigate } from "react-router-dom";
+} from "../../redux/action-creators/auth-creators";
 import { useForm } from "../../hooks/useForm";
 
 function ProfilePage() {
-  const user = useSelector(getUserState);
+  const user = useSelector(getAuthUserState);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const initValues = {
     name: user.name,
@@ -37,7 +35,6 @@ function ProfilePage() {
 
   const handleLogout = () => {
     dispatch(logoutUser());
-    navigate("/login", { replace: true });
   };
 
   const handleCancelChange = () => {
@@ -52,7 +49,7 @@ function ProfilePage() {
 
   return (
     <form className={classes.root} onSubmit={onSubmit}>
-      <div className={classes.wrapper}>
+      <div className={classes.wrapperLinks}>
         <p
           className={`${classes.menuElement} text text_type_main-medium text_color_primary`}
         >
@@ -76,7 +73,7 @@ function ProfilePage() {
         </p>
       </div>
 
-      <div>
+      <div className={classes.wrapperInputs}>
         <Input
           name="name"
           value={values.name}
@@ -117,91 +114,6 @@ function ProfilePage() {
         )}
       </div>
     </form>
-    // <div className={classes.root}>
-    //   <div className={classes.wrapper}>
-    //     <div className={classes.blockMenu}>
-    //       <p className={`${classes.menuElement} text text_type_main-medium`}>
-    //         Профиль
-    //       </p>
-    //       <p className={`${classes.menuElement} text text_type_main-medium`}>
-    //         История заказов
-    //       </p>
-    //       <p
-    //         className={`${classes.menuElement} text text_type_main-medium`}
-    //         onClick={handleLogout}
-    //       >
-    //         Выход
-    //       </p>
-    //       <p className="text text_type_main-default text_color_inactive mt-10">
-    //         В этом разделе вы можете изменить свои персональные данные
-    //       </p>
-    //     </div>
-    //
-    //     <div>
-    //       <Input
-    //         type="text"
-    //         placeholder="Имя"
-    //         onChange={(e) =>
-    //           setUserInfo((prevState) => ({
-    //             ...prevState,
-    //             name: e.target.value,
-    //           }))
-    //         }
-    //         value={userInfo.name}
-    //         icon="EditIcon"
-    //         extraClass="mb-6"
-    //       />
-    //       <Input
-    //         type="email"
-    //         placeholder="Логин"
-    //         onChange={(e) =>
-    //           setUserInfo((prevState) => ({
-    //             ...prevState,
-    //             email: e.target.value,
-    //           }))
-    //         }
-    //         value={userInfo.email}
-    //         icon="EditIcon"
-    //         extraClass="mb-6"
-    //       />
-    //       <Input
-    //         type="password"
-    //         placeholder="Пароль"
-    //         onChange={(e) =>
-    //           setUserInfo((prevState) => ({
-    //             ...prevState,
-    //             password: e.target.value,
-    //           }))
-    //         }
-    //         value={userInfo.password}
-    //         icon="EditIcon"
-    //         extraClass="mb-6"
-    //       />
-    //     </div>
-    //   </div>
-    //
-    //   {wasEdited && (
-    //     <div>
-    //       <Button
-    //         htmlType="button"
-    //         type="secondary"
-    //         size="medium"
-    //         onClick={handleCancelChange}
-    //       >
-    //         Отмена
-    //       </Button>
-    //
-    //       <Button
-    //         htmlType="submit"
-    //         type="primary"
-    //         size="medium"
-    //         onClick={() => handleEditUser(userInfo)}
-    //       >
-    //         Сохранить
-    //       </Button>
-    //     </div>
-    //   )}
-    // </div>
   );
 }
 

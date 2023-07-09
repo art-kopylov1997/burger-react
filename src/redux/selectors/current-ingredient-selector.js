@@ -1,1 +1,2 @@
-export const getCurrentIngredientState = (store) => store.currentIngredient;
+export const getCurrentIngredientState = (store) =>
+  store.currentIngredient.currentIngredient;

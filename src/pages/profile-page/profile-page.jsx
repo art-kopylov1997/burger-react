@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import classes from "./profile-page.module.css";
 import {
   Button,
@@ -8,12 +8,12 @@ import {
 import { getAuthUserState } from "../../redux/selectors/auth-selector";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  editUser,
+  editUserAuth,
   logoutUser,
 } from "../../redux/action-creators/auth-creators";
 import { useForm } from "../../hooks/useForm";
 
-function ProfilePage() {
+export const ProfilePage = () => {
   const user = useSelector(getAuthUserState);
   const dispatch = useDispatch();
 
@@ -22,20 +22,15 @@ function ProfilePage() {
     email: user.email,
     password: "",
   };
-
   const { values, handleChange, setValues } = useForm(initValues);
 
-  const wasEdited = React.useMemo(
+  const wasEdited = useMemo(
     () =>
       values.name !== user.name ||
       values.email !== user.email ||
       !!values.password,
     [user, values]
   );
-
-  const handleLogout = () => {
-    dispatch(logoutUser());
-  };
 
   const handleCancelChange = () => {
     setValues(initValues);
@@ -44,8 +39,16 @@ function ProfilePage() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(editUser(values));
+    dispatch(editUserAuth(values));
   };
+
+  const handleLogout = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(logoutUser());
+    },
+    [dispatch]
+  );
 
   return (
     <form className={classes.root} onSubmit={onSubmit}>
@@ -115,6 +118,4 @@ function ProfilePage() {
       </div>
     </form>
   );
-}
-
-export default ProfilePage;
+};

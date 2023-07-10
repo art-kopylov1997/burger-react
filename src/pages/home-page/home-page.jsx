@@ -4,7 +4,7 @@ import classes from "./home-page.module.css";
 import BurgerIngredients from "../../components/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor";
 
-function HomePage() {
+export const HomePage = () => {
   return (
     <main className={classes.root}>
       <DndProvider backend={HTML5Backend}>
@@ -14,5 +14,3 @@ function HomePage() {
     </main>
   );
 }
-
-export default HomePage;

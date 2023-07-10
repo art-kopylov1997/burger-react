@@ -1,86 +1,66 @@
-import React, { useState } from "react";
-import classes from "./register-page.module.css";
+import React, { useCallback } from "react";
+import classes from "../main-auth-style.module.css";
 import {
   Button,
+  EmailInput,
   Input,
+  PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registrationUser } from "../../redux/action-creators/auth-creators";
-import registryRequest from "../../services/api/register-request";
+import { useForm } from "../../hooks/useForm";
 
-function RegisterPage() {
-  const [userObject, setUserObject] = useState({
-    email: "",
-    password: "",
-    name: "",
-  });
+export const RegisterPage = () => {
   const dispatch = useDispatch();
 
-  const handleRegistry = () => {
-    const data = registryRequest(userObject);
+  const { values, handleChange } = useForm({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-    try {
-      if (data.success) {
-        dispatch(registrationUser(userObject));
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(registrationUser(values));
+    },
+    [dispatch, values]
+  );
 
   return (
-    <div className={classes.root}>
-      <h2 className="text text_type_main-medium">Регистрация</h2>
+    <form className={classes.root} onSubmit={onSubmit}>
+      <p className="text text_type_main-medium">Регистрация</p>
 
-      <Input
-        type="text"
-        placeholder="Имя"
-        onChange={(e) =>
-          setUserObject((prevState) => ({ ...prevState, name: e.target.value }))
-        }
-        value={userObject.name}
-        extraClass="mt-6"
-      />
-      <Input
-        type="email"
-        placeholder="E-mail"
-        onChange={(e) =>
-          setUserObject((prevState) => ({
-            ...prevState,
-            email: e.target.value,
-          }))
-        }
-        value={userObject.email}
-        extraClass="mt-6"
-      />
-      <Input
-        type="password"
-        placeholder="Пароль"
-        onChange={(e) =>
-          setUserObject((prevState) => ({
-            ...prevState,
-            password: e.target.value,
-          }))
-        }
-        icon="ShowIcon"
-        value={userObject.password}
-        extraClass="mt-6 mb-6"
-      />
+      <div className={`${classes.blockInputs} mt-6`}>
+        <Input
+          name="name"
+          value={values.name}
+          onChange={handleChange}
+          placeholder="Имя"
+        />
+        <EmailInput name="email" value={values.email} onChange={handleChange} />
+        <PasswordInput
+          name="password"
+          value={values.password}
+          onChange={handleChange}
+        />
+      </div>
 
-      <Button htmlType="button" onClick={handleRegistry}>
-        Зарегистрироваться
-      </Button>
+      <div className="mt-6 mb-20">
+        <Button htmlType="submit" type="primary" size="large">
+          Зарегистрироваться
+        </Button>
+      </div>
 
-      <p className="text text_type_main-default text_color_inactive mt-20">
-        Уже зарегистрированы?
-        <Link to="/login" className={classes.link}>
-          {" "}
-          Войти
-        </Link>
-      </p>
-    </div>
+      <div className={classes.blockLinks}>
+        <p className="text text_type_main-default text_color_inactive">
+          Уже зарегистрированы?{" "}
+          <Link to="/login" className={`${classes.link} text_color_accent`}>
+            Войти
+          </Link>
+        </p>
+      </div>
+    </form>
   );
 }
-
-export default RegisterPage;

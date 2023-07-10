@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./reset-password-page.module.css";
+import classes from "../main-auth-style.module.css";
 import {
   Button,
   Input,
@@ -10,9 +10,9 @@ import { Link, Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../../hooks/useForm";
 import { getAuthState } from "../../redux/selectors/auth-selector";
-import { resetPassword } from "../../redux/action-creators/auth-creators";
+import { sendPassword } from "../../redux/action-creators/auth-creators";
 
-function ResetPassword() {
+export const ResetPasswordPage = () => {
   const location = useLocation();
   const { resetPasswordStarted, resetPasswordFinished } =
     useSelector(getAuthState);
@@ -26,7 +26,7 @@ function ResetPassword() {
   const onSubmit = React.useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(resetPassword(values.password, values.emailCode));
+      dispatch(sendPassword(values.password, values.emailCode));
     },
     [dispatch, values]
   );
@@ -75,5 +75,3 @@ function ResetPassword() {
     </form>
   );
 }
-
-export default ResetPassword;

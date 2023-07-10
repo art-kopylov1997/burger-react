@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import classes from "./not-found-page.module.css";
+import classes from "../main-auth-style.module.css";
 
-function NotFoundPage() {
+export const NotFoundPage = () => {
   return (
     <div className={classes.container}>
       <div className={classes.content}>
@@ -17,5 +17,3 @@ function NotFoundPage() {
     </div>
   );
 }
-
-export default NotFoundPage;

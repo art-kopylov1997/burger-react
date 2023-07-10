@@ -1,11 +1,15 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import AppHeader from "../app-header";
-import HomePage from "../../pages/home-page";
-import LoginPage from "../../pages/login-page";
-import RegisterPage from "../../pages/register-page";
-import ForgotPasswordPage from "../../pages/forgot-password-page";
-import ResetPasswordPage from "../../pages/reset-password-page";
-import ProfilePage from "../../pages/profile-page";
+import {
+  HomePage,
+  LoginPage,
+  RegisterPage,
+  ForgotPasswordPage,
+  ResetPasswordPage,
+  ProfilePage,
+  NotFoundPage,
+  IngredientPage,
+} from "../../pages";
 import { ProtectedRoute } from "../protected-route";
 
 import { useEffect } from "react";
@@ -14,7 +18,6 @@ import { getIngredients } from "../../redux/action-creators/ingredients-creators
 import { checkUserAuth } from "../../redux/action-creators/auth-creators";
 import ErrorBoundary from "../../helpers/error-boundry";
 import IngredientDetails from "../ingredient-details";
-import NotFoundPage from "../../pages/not-found-page";
 
 function App() {
   const dispatch = useDispatch();
@@ -61,6 +64,7 @@ function App() {
           path="/profile/*"
           element={<ProtectedRoute element={<ProfilePage />} />}
         />
+        <Route path="/ingredients/:id" element={<IngredientPage />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

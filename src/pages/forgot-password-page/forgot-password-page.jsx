@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./forgor-password-page.module.css";
+import classes from "../main-auth-style.module.css";
 import {
   Button,
   EmailInput,
@@ -11,7 +11,7 @@ import { useForm } from "../../hooks/useForm";
 import { getAuthState } from "../../redux/selectors/auth-selector";
 import { sendResetPasswordEmail } from "../../redux/action-creators/auth-creators";
 
-function ForgotPasswordPage() {
+export const ForgotPasswordPage = () => {
   const location = useLocation();
   const { resetPasswordStarted } = useSelector(getAuthState);
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ function ForgotPasswordPage() {
   const onSubmit = React.useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(sendResetPasswordEmail(values.email));
+      dispatch(sendResetPasswordEmail(values));
     },
     [dispatch, values]
   );
@@ -62,5 +62,3 @@ function ForgotPasswordPage() {
     </form>
   );
 }
-
-export default ForgotPasswordPage;

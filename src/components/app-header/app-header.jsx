@@ -38,7 +38,7 @@ const AppHeader = () => {
         }
       >
         <div className={`${classes.wrapperNav} pr-25`}>
-          <ProfileIcon type="secondary" />
+          <ProfileIcon type="primary" />
           <span>Личный кабинет</span>
         </div>
       </NavLink>

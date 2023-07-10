@@ -15,7 +15,7 @@ import Modal from "../modal";
 import OrderDetails from "../order-details";
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
-import createOrderRequest from "../../services/api/create-order-request";
+import { createOrder } from "../../services/api/ingredients-service";
 import ConstructorIngredientList from "../constructor-ingredient-list";
 import {
   addIngredientConstructor,
@@ -60,7 +60,7 @@ const BurgerConstructor = () => {
     if (!user) {
       navigate("/login", { state: location, replace: true });
     } else {
-      const data = await createOrderRequest(payload);
+      const data = await createOrder(payload);
       const result = data.order.number;
       setOrderNumber(result);
       dispatch(clearListConstructor());

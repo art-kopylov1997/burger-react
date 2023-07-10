@@ -1,17 +1,16 @@
-import registryRequest from "../../services/api/register-request";
-import loginRequest from "../../services/api/login-request";
+import { editUser, login } from "../../services/api/auth-service";
+import { register } from "../../services/api/auth-service";
+import { getUser } from "../../services/api/auth-service";
+import { logout } from "../../services/api/auth-service";
+import { resetPasswordEmail } from "../../services/api/auth-service";
+import { resetPassword } from "../../services/api/auth-service";
+
 import {
   expireCookie,
   getCookie,
   setCookie,
 } from "../../helpers/cookie-helper";
 import setTokenExpirationDate from "../../helpers/local-storage-helper";
-import updateTokenRequest from "../../services/api/update-token-request";
-import getUserRequest from "../../services/api/get-user-request";
-import logoutRequest from "../../services/api/logout-request";
-import patchUserRequest from "../../services/api/patch-user-request";
-import resetPasswordEmailRequest from "../../services/api/reset-password-email-request";
-import resetPasswordRequest from "../../services/api/reset-password-request";
 
 export const AUTH_CHECKED = "AUTH_CHECKED";
 export const SET_USER = "SET_USER";
@@ -21,7 +20,7 @@ export const RESET_PASSWORD_STARTED = "RESET_PASSWORD_STARTED";
 
 export function checkUserAuth() {
   return function (dispatch) {
-    if (getCookie("token")) dispatch(getUser());
+    if (getCookie("token")) dispatch(getUserAuth());
 
     dispatch({ type: AUTH_CHECKED });
   };
@@ -43,72 +42,58 @@ export function checkUserAuth() {
 //   };
 // };
 
-export function getUser() {
+export function getUserAuth() {
   return function (dispatch) {
-    getUserRequest().then((res) => {
-      dispatch({ type: SET_USER, payload: res.user });
-    });
+    getUser()
+      .then((res) => {
+        dispatch({ type: SET_USER, payload: res.user });
+      })
+      .catch((e) => console.error(e));
   };
 }
 
-export function editUser(user) {
+export function editUserAuth(user) {
   return function (dispatch) {
-    patchUserRequest(user).then((res) => {
-      dispatch({ type: SET_USER, payload: res.user });
-    });
+    editUser(user)
+      .then((res) => {
+        dispatch({ type: SET_USER, payload: res.user });
+      })
+      .catch((e) => console.error(e));
   };
 }
 
 export function registrationUser(payload) {
   return function (dispatch) {
-    registryRequest(payload).then((res) => {
-      if (res && res.success) {
-        setCookie("token", res.accessToken);
-        localStorage.setItem("refreshToken", res.refreshToken);
+    register(payload)
+      .then((result) => {
+        setCookie("token", result.accessToken);
+        localStorage.setItem("refreshToken", result.refreshToken);
 
         setTokenExpirationDate(15);
 
-        dispatch({
-          type: SET_USER,
-          payload: res.user,
-        });
-      } else {
-        console.error("error: ", res);
-      }
-    });
+        dispatch({ type: SET_USER, user: result.user });
+      })
+      .catch((e) => console.error(e));
   };
 }
 
-export function loginUser(payload) {
+export function loginUser(email, password) {
   return function (dispatch) {
-    loginRequest(payload).then(async (res) => {
-      if (res && res.success) {
-        setCookie("token", res.accessToken);
-        localStorage.setItem("refreshToken", res.refreshToken);
+    login(email, password).then((result) => {
+      setCookie("token", result.accessToken);
+      localStorage.setItem("refreshToken", result.refreshToken);
 
-        setTokenExpirationDate(15);
+      setTokenExpirationDate(15);
 
-        const tokenPayload = { token: res.refreshToken };
-        await updateTokenRequest(tokenPayload);
-
-        dispatch({
-          type: SET_USER,
-          payload: res.user,
-        });
-      } else {
-        console.error("error: ", res);
-      }
+      dispatch({ type: SET_USER, payload: result.user });
     });
   };
 }
 
 export function logoutUser() {
   return function (dispatch) {
-    const logoutToken = { token: localStorage.getItem("refreshToken") };
-    logoutRequest(logoutToken).finally(() => {
-      dispatch({
-        type: LOGOUT_USER,
-      });
+    logout(localStorage.getItem("refreshToken")).finally(() => {
+      dispatch({ type: SET_USER, payload: null });
 
       expireCookie("token");
       localStorage.clear();
@@ -116,18 +101,18 @@ export function logoutUser() {
   };
 }
 
-export function resetPassword(password, emailCode) {
+export function sendPassword(password, emailCode) {
   return function (dispatch) {
-    resetPasswordRequest(password, emailCode).then(() =>
-      dispatch({ type: RESET_PASSWORD_FINISHED })
-    );
+    resetPassword(password, emailCode)
+      .then(() => dispatch({ type: RESET_PASSWORD_FINISHED }))
+      .catch((e) => console.error(e));
   };
 }
 
 export function sendResetPasswordEmail(email) {
   return function (dispatch) {
-    resetPasswordEmailRequest(email).then(() =>
-      dispatch({ type: RESET_PASSWORD_STARTED })
-    );
+    resetPasswordEmail(email)
+      .then(() => dispatch({ type: RESET_PASSWORD_STARTED }))
+      .catch((e) => console.error(e));
   };
 }

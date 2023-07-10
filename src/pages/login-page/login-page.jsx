@@ -1,84 +1,67 @@
-import React, { useState } from "react";
-import classes from "./login-page.module.css";
+import React, { useCallback } from "react";
+import classes from "../main-auth-style.module.css";
 import {
   Button,
-  Input,
+  EmailInput,
+  PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../redux/action-creators/auth-creators";
-import loginRequest from "../../services/api/login-request";
+import { useForm } from "../../hooks/useForm";
 
-function LoginPage() {
-  const [userObject, setUserObject] = useState({
+export const LoginPage = () => {
+  const dispatch = useDispatch();
+
+  const { values, handleChange } = useForm({
     email: "",
     password: "",
   });
 
-  const dispatch = useDispatch();
-
-  const handleLogin = async () => {
-    const data = await loginRequest(userObject);
-
-    try {
-      if (data.success) {
-        dispatch(loginUser(userObject));
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(loginUser(values.email, values.password));
+    },
+    [dispatch, values]
+  );
 
   return (
-    <div className={classes.root}>
-      <h2 className="text text_type_main-medium">Вход</h2>
+    <form className={classes.root} onSubmit={onSubmit}>
+      <p className="text text_type_main-medium">Вход</p>
 
-      <Input
-        type="email"
-        placeholder="E-mail"
-        onChange={(e) =>
-          setUserObject((prevState) => ({
-            ...prevState,
-            email: e.target.value,
-          }))
-        }
-        value={userObject.email}
-        extraClass="mt-6"
-      />
-      <Input
-        type="password"
-        placeholder="Пароль"
-        onChange={(e) =>
-          setUserObject((prevState) => ({
-            ...prevState,
-            password: e.target.value,
-          }))
-        }
-        icon="ShowIcon"
-        value={userObject.password}
-        extraClass="mt-6 mb-6"
-      />
+      <div className={`${classes.blockInputs} mt-6`}>
+        <EmailInput name="email" value={values.email} onChange={handleChange} />
+        <PasswordInput
+          name="password"
+          value={values.password}
+          onChange={handleChange}
+        />
+      </div>
 
-      <Button htmlType="button" onClick={handleLogin}>
-        Войти
-      </Button>
+      <div className="mt-6 mb-20">
+        <Button htmlType="submit" type="primary" size="large">
+          Войти
+        </Button>
+      </div>
 
-      <p className="text text_type_main-default text_color_inactive mt-20">
-        Вы — новый пользователь?
-        <Link to="/register" className={classes.link}>
-          {" "}
-          Зарегистрироваться
-        </Link>
-      </p>
-      <p className="text text_type_main-default text_color_inactive mt-4">
-        Забыли пароль?
-        <Link to="/forgot-password" className={classes.link}>
-          {" "}
-          Восстановить пароль
-        </Link>
-      </p>
-    </div>
+      <div className={classes.blockLinks}>
+        <p className="text text_type_main-default text_color_inactive">
+          Вы — новый пользователь?{" "}
+          <Link to="/register" className={`${classes.link} text_color_accent`}>
+            Зарегистрироваться
+          </Link>
+        </p>
+        <p className="text text_type_main-default text_color_inactive">
+          Забыли пароль?{" "}
+          <Link
+            to="/forgot-password"
+            className={`${classes.link} text_color_accent`}
+          >
+            Восстановить пароль
+          </Link>
+        </p>
+      </div>
+    </form>
   );
 }
-
-export default LoginPage;

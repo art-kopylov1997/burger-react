@@ -4,7 +4,7 @@
     align-items: center;
 }
 
-.blockInput {
+.blockInputs {
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -19,4 +19,13 @@
 
 .link {
     text-decoration: none;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    margin: auto;
 }

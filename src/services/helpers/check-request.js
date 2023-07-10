@@ -1,13 +1,15 @@
-export function checkSuccess(response) {
-  if (response && response.success) {
-    return Promise.resolve(response);
+export const checkSuccess = (res) => {
+  if (res && res.success) {
+    return res;
   }
 
-  return Promise.reject(`Ответ не success: ${response}`);
-}
+  return Promise.reject(`Ответ не success: ${res}`);
+};
 
-export function checkResponse(response) {
-  if (response.ok) return response.json();
+export const checkResponse = (res) => {
+  if (res.ok) {
+    return res.json();
+  }
 
-  return response.json().then((error) => Promise.reject(error));
-}
+  return Promise.reject(`Ошибка ${res.status}`);
+};

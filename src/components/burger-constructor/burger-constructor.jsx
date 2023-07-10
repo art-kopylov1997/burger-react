@@ -15,7 +15,7 @@ import Modal from "../modal";
 import OrderDetails from "../order-details";
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
-import { createOrder } from "../../services/api/ingredients-service";
+import { createOrder } from "../../services/api/norma-client-service";
 import ConstructorIngredientList from "../constructor-ingredient-list";
 import {
   addIngredientConstructor,

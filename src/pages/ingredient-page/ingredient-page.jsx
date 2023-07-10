@@ -36,12 +36,10 @@ export const IngredientPage = () => {
       ) : (
         <div className={`${classes.modalContent} pt-10 pr-10 pl-10 pb-15`}>
           <div className={classes.modalHeader}>
-            <p className="text text_type_main-large">Детали ингредиента</p>
+            <p className="text text_type_main-large">{"Детали ингредиента"}</p>
           </div>
 
-          <div className={classes.ingredientImage}>
-            <img src={image} alt={name} />
-          </div>
+          <img className={classes.ingredientImage} src={image} alt={name} />
 
           <div className="mt-4">
             <p

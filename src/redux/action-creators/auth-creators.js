@@ -1,9 +1,9 @@
-import { editUser, login } from "../../services/api/auth-service";
-import { register } from "../../services/api/auth-service";
-import { getUser } from "../../services/api/auth-service";
-import { logout } from "../../services/api/auth-service";
-import { resetPasswordEmail } from "../../services/api/auth-service";
-import { resetPassword } from "../../services/api/auth-service";
+import { editUser, login } from "../../services/api/norma-client-service";
+import { register } from "../../services/api/norma-client-service";
+import { getUser } from "../../services/api/norma-client-service";
+import { logout } from "../../services/api/norma-client-service";
+import { resetPasswordEmail } from "../../services/api/norma-client-service";
+import { resetPassword } from "../../services/api/norma-client-service";
 
 import {
   expireCookie,

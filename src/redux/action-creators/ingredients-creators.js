@@ -1,4 +1,4 @@
-import { getAllIngredients } from "../../services/api/ingredients-service";
+import { getAllIngredients } from "../../services/api/norma-client-service";
 
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";

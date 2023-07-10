@@ -29,7 +29,9 @@ const AppHeader = () => {
         </div>
       </div>
 
-      <Logo />
+      <NavLink to="/">
+        <Logo />
+      </NavLink>
 
       <NavLink
         to="/profile"

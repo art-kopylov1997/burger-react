@@ -1,5 +1,6 @@
-import { checkSuccess } from "../helpers/check-request";
+import { checkResponse, checkSuccess } from "../helpers/check-request";
 import {
+  getRequest,
   getRequestWithAuth,
   patchRequestWithAuth,
   postRequest,
@@ -9,43 +10,67 @@ import setTokenExpirationDate from "../../helpers/local-storage-helper";
 
 const BASE_URL = "https://norma.nomoreparties.space/api";
 
+export function getAllIngredients() {
+  return getRequest(`${BASE_URL}/ingredients`)
+    .then(checkResponse)
+    .then(checkSuccess);
+}
+
+export function createOrder(payload) {
+  return postRequest(`${BASE_URL}/orders`, payload)
+    .then(checkResponse)
+    .then(checkSuccess);
+}
+
 export function register(payload) {
-  return postRequest(`${BASE_URL}/auth/register`, payload).then(checkSuccess);
+  return postRequest(`${BASE_URL}/auth/register`, payload)
+    .then(checkResponse)
+    .then(checkSuccess);
 }
 
 export function login(email, password) {
-  return postRequest(`${BASE_URL}/auth/login`, { email, password }).then(
-    checkSuccess
-  );
+  return postRequest(`${BASE_URL}/auth/login`, { email, password })
+    .then(checkResponse)
+    .then(checkSuccess);
 }
 
 export function logout(token) {
-  return postRequest(`${BASE_URL}/auth/logout`, { token }).then(checkSuccess);
+  return postRequest(`${BASE_URL}/auth/logout`, { token })
+    .then(checkResponse)
+    .then(checkSuccess);
 }
 
 export function resetPasswordEmail(email) {
   return postRequest(`${BASE_URL}/password-reset`, {
     email,
-  }).then(checkSuccess);
+  })
+    .then(checkResponse)
+    .then(checkSuccess);
 }
 
 export function resetPassword(newPassword, emailCode) {
   return postRequest(`${BASE_URL}/password-reset/reset`, {
     password: newPassword,
     token: emailCode,
-  }).then(checkSuccess);
+  })
+    .then(checkResponse)
+    .then(checkSuccess);
 }
 
 export function getUser() {
   return executeWithAuth(
     async () => await getRequestWithAuth(`${BASE_URL}/auth/user`)
-  ).then(checkSuccess);
+  )
+    .then(checkResponse)
+    .then(checkSuccess);
 }
 
 export function editUser(user) {
   return executeWithAuth(
     async () => await patchRequestWithAuth(`${BASE_URL}/auth/user`, user)
-  ).then(checkSuccess);
+  )
+    .then(checkResponse)
+    .then(checkSuccess);
 }
 
 async function executeWithAuth(request) {

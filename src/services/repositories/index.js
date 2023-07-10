@@ -1,4 +1,3 @@
-import { checkResponse } from "../helpers/check-request";
 import { getCookie } from "../../helpers/cookie-helper";
 
 export function getRequest(url) {
@@ -7,7 +6,7 @@ export function getRequest(url) {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then(checkResponse);
+  });
 }
 
 export function postRequest(url, body) {
@@ -17,7 +16,7 @@ export function postRequest(url, body) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
-  }).then(checkResponse);
+  });
 }
 
 export function getRequestWithAuth(url) {
@@ -27,7 +26,7 @@ export function getRequestWithAuth(url) {
       "Content-Type": "application/json",
       Authorization: getCookie("token") ?? "",
     },
-  }).then(checkResponse);
+  });
 }
 
 export function patchRequestWithAuth(url, body) {
@@ -38,5 +37,5 @@ export function patchRequestWithAuth(url, body) {
       Authorization: getCookie("token") ?? "",
     },
     body: JSON.stringify(body),
-  }).then(checkResponse);
+  });
 }

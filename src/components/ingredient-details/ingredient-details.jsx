@@ -36,7 +36,7 @@ const IngredientDetails = () => {
   }, [location.state, navigate]);
 
   return (
-    <Modal headerText="Детали ингредиента" closeModal={closeModal}>
+    <Modal title="Детали ингредиента" closeModal={closeModal}>
       {ingredientsRequest ? (
         <Loader size="huge" />
       ) : ingredientsFailed ? (

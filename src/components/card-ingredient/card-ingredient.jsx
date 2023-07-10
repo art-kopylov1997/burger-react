@@ -12,10 +12,11 @@ import { Link, useLocation } from "react-router-dom";
 
 const CardIngredient = ({ ingredient }) => {
   const { name, image, price } = ingredient;
-  const { ingredientsConstructor } = useSelector(
+  const { ingredientsConstructor, bunsConstructor } = useSelector(
     getIngredientsConstructorState
   );
   const [ingredientCounter, setIngredientCounter] = useState(0);
+  const [bunCounter, setBunCounter] = useState(0);
 
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
@@ -27,16 +28,19 @@ const CardIngredient = ({ ingredient }) => {
 
   useEffect(() => {
     calculateCount();
-  }, [ingredientsConstructor, setIngredientCounter]);
+  }, [ingredientsConstructor, bunsConstructor, setIngredientCounter]);
 
   const location = useLocation();
 
   const calculateCount = () => {
-    const count = ingredientsConstructor.filter(
+    const countIngredient = ingredientsConstructor.filter(
       (el) => el.name === name
     ).length;
 
-    setIngredientCounter(count);
+    const countBun = bunsConstructor.filter((el) => el.name === name).length;
+
+    setIngredientCounter(countIngredient);
+    setBunCounter(countBun);
   };
   return (
     <div
@@ -55,6 +59,13 @@ const CardIngredient = ({ ingredient }) => {
               className={`${classes.selectedIcon} text text_type_digits-default`}
             >
               {ingredientCounter}
+            </div>
+          )}
+          {bunCounter > 0 && (
+            <div
+              className={`${classes.selectedIcon} text text_type_digits-default`}
+            >
+              {bunCounter}
             </div>
           )}
           <img className="pl-4 pr-4" src={image} alt={name} />

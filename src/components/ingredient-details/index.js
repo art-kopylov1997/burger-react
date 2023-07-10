@@ -1,1 +1,1 @@
-export { default } from "./ingredient-details";
+export { default } from "../ingredient-details-card/ingredient-details-card";

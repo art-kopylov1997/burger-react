@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 import { getIngredients } from "../../redux/action-creators/ingredients-creators";
 import { checkUserAuth } from "../../redux/action-creators/auth-creators";
 import ErrorBoundary from "../../helpers/error-boundry";
-import IngredientDetails from "../ingredient-details";
+import IngredientDetailsCard from "../ingredient-details";
 
 function App() {
   const dispatch = useDispatch();
@@ -70,7 +70,7 @@ function App() {
       </Routes>
       {background && (
         <Routes>
-          <Route path="/ingredients/:id" element={<IngredientDetails />} />
+          <Route path="/ingredients/:id" element={<IngredientDetailsCard />} />
         </Routes>
       )}
     </ErrorBoundary>

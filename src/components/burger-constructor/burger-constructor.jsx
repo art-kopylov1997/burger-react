@@ -15,7 +15,7 @@ import Modal from "../modal";
 import OrderDetails from "../order-details";
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
-import createOrderRequest from "../../services/api/createOrderRequest";
+import { createOrder } from "../../services/api/norma-client-service";
 import ConstructorIngredientList from "../constructor-ingredient-list";
 import {
   addIngredientConstructor,
@@ -25,16 +25,21 @@ import {
 import { getIngredientsConstructorState } from "../../redux/selectors/ingredients-constructor-selector";
 import { getOrderingState } from "../../redux/selectors/ordering-selector";
 import { setOrderCost } from "../../redux/action-creators/ordering-creators";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getAuthUserState } from "../../redux/selectors/auth-selector";
 
 const BurgerConstructor = () => {
   const { ingredientsConstructor, bunsConstructor } = useSelector(
     getIngredientsConstructorState
   );
+  const user = useSelector(getAuthUserState);
   const { orderCost } = useSelector(getOrderingState);
   const { isModalOpen, openModal, closeModal } = useModal();
   const [orderNumber, setOrderNumber] = useState(0);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     setCountOrder();
@@ -52,15 +57,14 @@ const BurgerConstructor = () => {
     ];
     payload.ingredients.push(...idsIngredients);
 
-    const data = await createOrderRequest(payload);
-    const result = data.order.number;
-
-    try {
+    if (!user) {
+      navigate("/login", { state: location, replace: true });
+    } else {
+      const data = await createOrder(payload);
+      const result = data.order.number;
       setOrderNumber(result);
       dispatch(clearListConstructor());
       openModal();
-    } catch (error) {
-      console.error(error);
     }
   };
 

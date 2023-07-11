@@ -1,10 +1,10 @@
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import classes from "./main.module.css";
-import BurgerIngredients from "../burger-ingredients";
-import BurgerConstructor from "../burger-constructor";
+import classes from "./home-page.module.css";
+import BurgerIngredients from "../../components/burger-ingredients";
+import BurgerConstructor from "../../components/burger-constructor";
 
-function Main() {
+export const HomePage = () => {
   return (
     <main className={classes.root}>
       <DndProvider backend={HTML5Backend}>
@@ -14,5 +14,3 @@ function Main() {
     </main>
   );
 }
-
-export default Main;

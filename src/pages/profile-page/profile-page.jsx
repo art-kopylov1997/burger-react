@@ -12,10 +12,16 @@ import {
   logoutUser,
 } from "../../redux/action-creators/auth-creators";
 import { useForm } from "../../hooks/useForm";
+import MenuLink from "./menu-link";
 
 export const ProfilePage = () => {
   const user = useSelector(getAuthUserState);
   const dispatch = useDispatch();
+
+  const pathLocations = {
+    profile: "/profile",
+    orderHistory: "/order-history",
+  };
 
   const initValues = {
     name: user.name,
@@ -53,25 +59,14 @@ export const ProfilePage = () => {
   return (
     <form className={classes.root} onSubmit={onSubmit}>
       <div className={classes.wrapperLinks}>
-        <p
-          className={`${classes.menuElement} text text_type_main-medium text_color_primary`}
-        >
-          Профиль
-        </p>
-        <p
-          className={`${classes.menuElement} text text_type_main-medium text_color_inactive`}
-        >
+        <MenuLink pathLocation={pathLocations.profile}>Профиль</MenuLink>
+        <MenuLink pathLocation={pathLocations.orderHistory}>
           История заказов
-        </p>
-        <p
-          className={`${classes.menuElement} text text_type_main-medium text_color_inactive`}
-          onClick={handleLogout}
-        >
+        </MenuLink>
+        <MenuLink pathLocation="" onClick={handleLogout}>
           Выход
-        </p>
-        <p
-          className={`${classes.menuElement} mt-20 text text_type_main-default text_color_inactive`}
-        >
+        </MenuLink>
+        <p className="mt-30 text text_type_main-default text_color_inactive">
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>

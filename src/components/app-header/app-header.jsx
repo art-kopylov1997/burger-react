@@ -1,49 +1,28 @@
 import { NavLink } from "react-router-dom";
 import classes from "./app-header.module.css";
-import {
-  Logo,
-  BurgerIcon,
-  ListIcon,
-  ProfileIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
+import HeaderLink from "./header-link";
 
 const AppHeader = () => {
   return (
     <header className={`${classes.header} text text_type_main-default m-10`}>
       <div className={`${classes.root} pl-20`}>
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            isActive ? classes.activeLink : classes.link
-          }
-        >
-          <div className={`${classes.wrapperNav} p-4`}>
-            <BurgerIcon type="primary" />
-            <span>Конструктор</span>
-          </div>
-        </NavLink>
+        <HeaderLink locationTo="/" iconType="burger">
+          Конструктор
+        </HeaderLink>
 
-        <div className={`${classes.wrapperNav} text_color_inactive p-4`}>
-          <ListIcon type="primary" />
-          <span>Лента заказов</span>
-        </div>
+        <HeaderLink locationTo="/orderings" iconType="list">
+          Лента заказов
+        </HeaderLink>
       </div>
 
       <NavLink to="/">
         <Logo />
       </NavLink>
 
-      <NavLink
-        to="/profile"
-        className={({ isActive }) =>
-          isActive ? classes.activeLink : classes.link
-        }
-      >
-        <div className={`${classes.wrapperNav} pr-25`}>
-          <ProfileIcon type="primary" />
-          <span>Личный кабинет</span>
-        </div>
-      </NavLink>
+      <HeaderLink locationTo="/profile" iconType="profile">
+        Личный кабинет
+      </HeaderLink>
     </header>
   );
 };

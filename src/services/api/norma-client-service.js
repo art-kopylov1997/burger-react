@@ -17,7 +17,7 @@ export function getAllIngredients() {
 }
 
 export function createOrder(payload) {
-  return postRequest(`${BASE_URL}/orders`, payload)
+  return postRequest(`${BASE_URL}/orders`, { ingredients: payload })
     .then(checkResponse)
     .then(checkSuccess);
 }

@@ -46,21 +46,20 @@ const BurgerConstructor = () => {
   }, [ingredientsConstructor, bunsConstructor]);
 
   const createNewOrder = async () => {
-    const payload = { ingredients: [] };
     const idsIngredientsConstructor = ingredientsConstructor.map(
       (el) => el._id
     );
     const idsBunsConstructor = bunsConstructor.map((el) => el._id);
     const idsIngredients = [
+      idsBunsConstructor[0],
       ...idsIngredientsConstructor,
-      ...idsBunsConstructor,
+      idsBunsConstructor[1],
     ];
-    payload.ingredients.push(...idsIngredients);
 
     if (!user) {
       navigate("/login", { state: location, replace: true });
     } else {
-      const data = await createOrder(payload);
+      const data = await createOrder(idsIngredients);
       const result = data.order.number;
       setOrderNumber(result);
       dispatch(clearListConstructor());
@@ -75,6 +74,7 @@ const BurgerConstructor = () => {
     const pricesBunsConstructor = bunsConstructor.map((el) => el.price);
     const prices = [...pricesIngredientsConstructor, ...pricesBunsConstructor];
     const newCount = prices.reduce((acc, number) => acc + number, 0);
+
     dispatch(setOrderCost(newCount));
   };
 

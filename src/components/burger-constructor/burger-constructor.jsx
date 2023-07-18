@@ -59,10 +59,10 @@ const BurgerConstructor = () => {
     if (!user) {
       navigate("/login", { state: location, replace: true });
     } else {
-      const data = await createOrder(idsIngredients);
-      const result = data.order.number;
-      setOrderNumber(result);
-      dispatch(clearListConstructor());
+      // const data = await createOrder(idsIngredients);
+      // const result = data.order.number;
+      // setOrderNumber(result);
+      // dispatch(clearListConstructor());
       openModal();
     }
   };

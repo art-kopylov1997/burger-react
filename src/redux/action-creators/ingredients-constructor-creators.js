@@ -1,3 +1,6 @@
+import {resetPassword} from "../../services/api/norma-client-service";
+import {RESET_PASSWORD_FINISHED} from "./auth-creators";
+
 export const ADD_BUN_CONSTRUCTOR = "ADD_BUN_CONSTRUCTOR";
 export const ADD_INGREDIENT_CONSTRUCTOR = "ADD_INGREDIENT_CONSTRUCTOR";
 export const DEL_INGREDIENT_CONSTRUCTOR = "DEL_INGREDIENT_CONSTRUCTOR";
@@ -24,6 +27,14 @@ export const delIngredientConstructor = (id) => ({
   type: DEL_INGREDIENT_CONSTRUCTOR,
   id,
 });
+//
+// export function sendPassword(password, emailCode) {
+//   return function (dispatch) {
+//     resetPassword(password, emailCode)
+//         .then(() => dispatch({ type: RESET_PASSWORD_FINISHED }))
+//         .catch((e) => console.error(e));
+//   };
+// }
 
 export const updateListConstructor = (payload) => ({
   type: UPDATE_LIST_INGREDIENTS_CONSTRUCTOR,

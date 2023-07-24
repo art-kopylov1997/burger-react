@@ -1,4 +1,4 @@
-import { checkResponse, checkSuccess } from "../helpers/check-request";
+import { checkSuccess } from "../helpers/check-request";
 import {
   getRequest,
   getRequestWithAuth,
@@ -28,24 +28,21 @@ import {
   TRegisterResponse,
   TResetPasswordResponse,
   TSendResetPasswordEmailResponse,
-  TServerResponse,
 } from "../types/responses";
 
 const BASE_URL = "https://norma.nomoreparties.space/api";
 
 export function getAllIngredients() {
-  return getRequest<TGetIngredientsResponse>(`${BASE_URL}/ingredients`)
-    .then(checkResponse)
-    .then(checkSuccess);
+  return getRequest<TGetIngredientsResponse>(`${BASE_URL}/ingredients`).then(
+    checkSuccess
+  );
 }
 
 export function createOrder(payload: Array<string>): Promise<any> {
   return postRequest<TCreateOrderRequest, TCreateOrderResponse>(
     `${BASE_URL}/orders`,
     { ingredients: payload }
-  )
-    .then(checkResponse)
-    .then(checkSuccess);
+  ).then(checkSuccess);
 }
 
 export function register(
@@ -54,9 +51,7 @@ export function register(
   return postRequest<TRegisterRequest, TRegisterResponse>(
     `${BASE_URL}/auth/register`,
     payload
-  )
-    .then(checkResponse)
-    .then(checkSuccess);
+  ).then(checkSuccess);
 }
 
 export function login(
@@ -66,18 +61,14 @@ export function login(
   return postRequest<TLoginRequest, TLoginResponse>(`${BASE_URL}/auth/login`, {
     email,
     password,
-  })
-    .then(checkResponse)
-    .then(checkSuccess);
+  }).then(checkSuccess);
 }
 
 export function logout(token: string): Promise<TLogoutResponse> {
   return postRequest<TLogoutRequest, TLogoutResponse>(
     `${BASE_URL}/auth/logout`,
     { token }
-  )
-    .then(checkResponse)
-    .then(checkSuccess);
+  ).then(checkSuccess);
 }
 
 export function resetPasswordEmail(
@@ -88,9 +79,7 @@ export function resetPasswordEmail(
     TSendResetPasswordEmailResponse
   >(`${BASE_URL}/password-reset`, {
     email,
-  })
-    .then(checkResponse)
-    .then(checkSuccess);
+  }).then(checkSuccess);
 }
 
 export function resetPassword(
@@ -103,18 +92,14 @@ export function resetPassword(
       password: newPassword,
       token: emailCode,
     }
-  )
-    .then(checkResponse)
-    .then(checkSuccess);
+  ).then(checkSuccess);
 }
 
 export function getUser(): Promise<TGetUserResponse> {
   return executeWithAuth(
     async () =>
       await getRequestWithAuth<TGetUserResponse>(`${BASE_URL}/auth/user`)
-  )
-    .then(checkResponse)
-    .then(checkSuccess);
+  ).then(checkSuccess);
 }
 
 export function editUser(user: TEditUserRequest): Promise<TEditUserResponse> {
@@ -124,9 +109,7 @@ export function editUser(user: TEditUserRequest): Promise<TEditUserResponse> {
         `${BASE_URL}/auth/user`,
         user
       )
-  )
-    .then(checkResponse)
-    .then(checkSuccess);
+  ).then(checkSuccess);
 }
 
 async function executeWithAuth<T>(request: Function) {
@@ -138,7 +121,8 @@ async function executeWithAuth<T>(request: Function) {
   try {
     return await request();
   } catch (exc) {
-    if (exc.message.includes("jwt expired")) return Promise.reject(exc);
+    if ((exc as Error).message.includes("jwt expired"))
+      return Promise.reject(exc);
 
     await refreshToken();
 

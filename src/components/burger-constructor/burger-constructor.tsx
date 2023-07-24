@@ -25,6 +25,7 @@ import { getOrderingState } from "../../redux/selectors/ordering-selector";
 import { setOrderCost } from "../../redux/action-creators/ordering-creators";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAuthUserState } from "../../redux/selectors/auth-selector";
+import { IIngredient } from "../../utils/interfaces";
 
 const BurgerConstructor: FC = () => {
   const { ingredientsConstructor, bunsConstructor } = useSelector(
@@ -74,7 +75,7 @@ const BurgerConstructor: FC = () => {
     dispatch(setOrderCost(newCount));
   };
 
-  const onDropHandler = (payload: object) => {
+  const onDropHandler = (payload: IIngredient) => {
     const dragId = uuidv4();
     dispatch(addIngredientConstructor({ ...payload, dragId }));
   };
@@ -86,7 +87,7 @@ const BurgerConstructor: FC = () => {
   const [{ borderColor }, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item) {
-      onDropHandler(item as object);
+      onDropHandler(item as IIngredient);
     },
     collect: (monitor) => ({
       borderColor: monitor.isOver() ? "lightgreen" : "transparent",

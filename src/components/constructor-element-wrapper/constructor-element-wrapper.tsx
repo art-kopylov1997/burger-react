@@ -42,7 +42,7 @@ const ConstructorElementWrapper: FC<IConstructorElementWrapper> = ({
         return;
       }
       moveCard(dragIndex, hoverIndex);
-      // @ts-ignore
+      // такая же проблема как и в ConstructorIngredientList, думаю она оттуда и идет эта ошибка
       item.index = hoverIndex;
     },
   });
@@ -72,7 +72,7 @@ const ConstructorElementWrapper: FC<IConstructorElementWrapper> = ({
         price={item.price}
         text={item.name}
         type={item.elementProperty}
-        handleClose={() => deleteItem(item.dragId)}
+        handleClose={() => deleteItem(item.dragId!)}
       />
     </div>
   );

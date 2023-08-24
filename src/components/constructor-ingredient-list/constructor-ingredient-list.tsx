@@ -1,5 +1,5 @@
 import { FC, useCallback } from "react";
-import { useDispatch } from "../../hooks/typedHooksRedux";
+import { useDispatch } from "../../hooks/typedStorageHooks";
 import { updateListConstructor } from "../../redux/actions/ingredients-constructor";
 import ConstructorElementWrapper from "../constructor-element-wrapper";
 import { IIngredient } from "../../utils/interfaces";

@@ -7,7 +7,7 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { useDispatch } from "../hooks/typedHooksRedux";
+import { useDispatch } from "../hooks/typedStorageHooks";
 import { registrationUser } from "../redux/actions/auth";
 import { useForm } from "../hooks/useForm";
 

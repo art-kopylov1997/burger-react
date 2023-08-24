@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useSelector } from "../hooks/typedHooksRedux";
+import { useSelector } from "../hooks/typedStorageHooks";
 import {
   getAuthState,
   getAuthUserState,

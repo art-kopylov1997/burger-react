@@ -13,7 +13,7 @@ import {
 import { ProtectedRoute } from "../protected-route";
 
 import { useEffect } from "react";
-import { useDispatch } from "../../hooks/typedHooksRedux";
+import { useDispatch } from "../../hooks/typedStorageHooks";
 import { getIngredients } from "../../redux/actions/ingredients";
 import { checkUserAuth } from "../../redux/actions/auth";
 import ErrorBoundary from "../../helpers/error-boundry";

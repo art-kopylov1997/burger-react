@@ -42,8 +42,9 @@ const ConstructorElementWrapper: FC<IConstructorElementWrapper> = ({
         return;
       }
       moveCard(dragIndex, hoverIndex);
-      // такая же проблема как и в ConstructorIngredientList, думаю она оттуда и идет эта ошибка
-      item.index = hoverIndex;
+
+      // item.index = hoverIndex;
+      index = hoverIndex
     },
   });
 

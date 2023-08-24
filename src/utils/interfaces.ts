@@ -14,19 +14,13 @@ export interface IIngredient {
   image_large: string;
   __v: number;
   dragId?: string;
+  id?: string;
+  index?: number;
+  elementProperty?: TElementProperty | undefined;
 }
 
 export interface IConstructorElementWrapper {
-  item: {
-    id: string;
-    image: string;
-    index: number;
-    type: string;
-    price: number;
-    name: string;
-    elementProperty: TElementProperty | undefined;
-    dragId: string;
-  };
+  item: IIngredient;
   index: number;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
   deleteItem: (dragId: string) => void;

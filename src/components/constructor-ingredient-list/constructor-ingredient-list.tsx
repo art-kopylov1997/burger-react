@@ -30,7 +30,6 @@ const ConstructorIngredientList: FC<IConstructorIngredientList> = ({
   return (
     <>
       {ingredients.map((item, index) => (
-        //  Покажите пожалуйста как исправить ошибку с item, не понимаю
         <ConstructorElementWrapper
           key={item.dragId}
           index={index}

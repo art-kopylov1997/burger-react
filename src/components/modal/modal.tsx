@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect } from "react";
+import { FC, PropsWithChildren, useEffect } from "react";
 
 import classes from "./modal.module.css";
 import { createPortal } from "react-dom";
@@ -8,10 +8,13 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 interface IModal {
   title: string;
   closeModal: () => void;
-  children: ReactNode;
 }
 
-const Modal: FC<IModal> = ({ title, closeModal, children }) => {
+const Modal: FC<PropsWithChildren<IModal>> = ({
+  title,
+  closeModal,
+  children,
+}) => {
   function handleKeyDown(event: KeyboardEvent) {
     if (event.code === "Escape") {
       closeModal();

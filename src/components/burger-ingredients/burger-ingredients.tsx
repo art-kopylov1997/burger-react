@@ -15,6 +15,8 @@ const BurgerIngredients: FC = () => {
     if (element) element.scrollIntoView({ behavior: "smooth" });
   };
 
+  // TODO: Можно лучше: фильтры лучше обернуть в useMemo и не проходить 3 раза по одному и тому же массиву,
+  //  а с помощью reduce раскидать разные типы в новый обьект {bun: [...], main: [...], sauce: [...] }
   const listBun = ingredients.filter((el: any) => el.type === "bun");
   const listMain = ingredients.filter((el: any) => el.type === "main");
   const listSauce = ingredients.filter((el: any) => el.type === "sauce");

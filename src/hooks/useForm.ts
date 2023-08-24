@@ -10,6 +10,8 @@ type TUseFormReturn = {
   setValues: React.Dispatch<React.SetStateAction<TInputValues>>;
 };
 
+// TODO: Можно лучше: для типизации форм стоит использовать дженерик типы function useForm<T extends
+//  [key: string]: number|string|boolean>(inputValues: T): TUseFormReturn<T>
 export function useForm(inputValues: TInputValues): TUseFormReturn {
   const [values, setValues] = useState<TInputValues>(inputValues);
 

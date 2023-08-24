@@ -19,10 +19,10 @@ import {
   addIngredientConstructor,
   clearListConstructor,
   delIngredientConstructor,
-} from "../../redux/action-creators/ingredients-constructor-creators";
+} from "../../redux/actions/ingredients-constructor";
 import { getIngredientsConstructorState } from "../../redux/selectors/ingredients-constructor-selector";
 import { getOrderingState } from "../../redux/selectors/ordering-selector";
-import { setOrderCost } from "../../redux/action-creators/ordering-creators";
+import { setOrderCost } from "../../redux/actions/ordering";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAuthUserState } from "../../redux/selectors/auth-selector";
 import { IIngredient } from "../../utils/interfaces";

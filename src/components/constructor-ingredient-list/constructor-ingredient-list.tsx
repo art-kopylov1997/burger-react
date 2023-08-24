@@ -1,6 +1,6 @@
-import { useDispatch } from "react-redux";
 import { FC, useCallback } from "react";
-import { updateListConstructor } from "../../redux/action-creators/ingredients-constructor-creators";
+import { useDispatch } from "../../hooks/typedHooksRedux";
+import { updateListConstructor } from "../../redux/actions/ingredients-constructor";
 import ConstructorElementWrapper from "../constructor-element-wrapper";
 import { IIngredient } from "../../utils/interfaces";
 

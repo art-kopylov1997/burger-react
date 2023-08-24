@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   editUserAuth,
   logoutUser,
-} from "../redux/action-creators/auth-creators";
+} from "../redux/actions/auth";
 import { useForm } from "../hooks/useForm";
 
 export const ProfilePage: FC = () => {

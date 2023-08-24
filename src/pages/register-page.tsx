@@ -7,8 +7,8 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { registrationUser } from "../redux/action-creators/auth-creators";
+import { useDispatch } from "../hooks/typedHooksRedux";
+import { registrationUser } from "../redux/actions/auth";
 import { useForm } from "../hooks/useForm";
 
 export const RegisterPage: FC = () => {

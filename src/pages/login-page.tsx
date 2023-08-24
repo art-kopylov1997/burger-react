@@ -6,8 +6,8 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { loginUser } from "../redux/action-creators/auth-creators";
+import { useDispatch } from "../hooks/typedHooksRedux";
+import { loginUser } from "../redux/actions/auth";
 import { useForm } from "../hooks/useForm";
 
 export const LoginPage: FC = () => {

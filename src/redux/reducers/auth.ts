@@ -4,16 +4,30 @@ import {
   LOGOUT_USER,
   RESET_PASSWORD_STARTED,
   RESET_PASSWORD_FINISHED,
-} from "../action-creators/auth-creators";
+} from "../constants";
+import { IUser } from "../../utils/interfaces";
+import { TAuthActions } from "../actions/auth";
 
-export const initialState = {
+type TInitialState = {
+  user: IUser | null;
+
+  authChecked: boolean;
+
+  resetPasswordStarted: boolean;
+  resetPasswordFinished: boolean;
+};
+
+export const initialState: TInitialState = {
   user: null,
   authChecked: false,
   resetPasswordStarted: false,
   resetPasswordFinished: false,
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (
+  state = initialState,
+  action: TAuthActions
+): TInitialState => {
   switch (action.type) {
     case AUTH_CHECKED: {
       return { ...state, authChecked: true };

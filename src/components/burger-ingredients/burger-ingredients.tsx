@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, FC } from "react";
 import classes from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/typedHooksRedux";
 import ListIngredients from "../list-ingredients/list-ingredients";
 import { getIngredientsState } from "../../redux/selectors/ingredient-selector";
 

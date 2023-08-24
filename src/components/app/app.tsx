@@ -13,9 +13,9 @@ import {
 import { ProtectedRoute } from "../protected-route";
 
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getIngredients } from "../../redux/action-creators/ingredients-creators";
-import { checkUserAuth } from "../../redux/action-creators/auth-creators";
+import { useDispatch } from "../../hooks/typedHooksRedux";
+import { getIngredients } from "../../redux/actions/ingredients";
+import { checkUserAuth } from "../../redux/actions/auth";
 import ErrorBoundary from "../../helpers/error-boundry";
 import IngredientDetailsCard from "../ingredient-details";
 import { FC } from "react";

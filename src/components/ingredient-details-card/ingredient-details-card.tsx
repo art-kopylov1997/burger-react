@@ -7,7 +7,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   clearCurrentIngredient,
   fillCurrentIngredient,
-} from "../../redux/action-creators/current-ingredient-creators";
+} from "../../redux/actions/current-ingredient";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
 const IngredientDetailsCard = () => {

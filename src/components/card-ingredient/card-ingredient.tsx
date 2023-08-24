@@ -1,6 +1,6 @@
 import React from "react";
 import { FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/typedHooksRedux";
 import { useDrag } from "react-dnd";
 
 import classes from "./card-ingredient.module.css";

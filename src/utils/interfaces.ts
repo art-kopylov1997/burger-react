@@ -16,7 +16,12 @@ export interface IIngredient {
   dragId?: string;
   id?: string;
   index?: number;
-  elementProperty?: TElementProperty | undefined;
+  elementProperty?: TElementProperty;
+}
+
+export interface IUser {
+  email: string;
+  name: string;
 }
 
 export interface IConstructorElementWrapper {

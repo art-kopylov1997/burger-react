@@ -4,19 +4,29 @@ import {
   DEL_INGREDIENT_CONSTRUCTOR,
   UPDATE_LIST_INGREDIENTS_CONSTRUCTOR,
   CLEAR_LIST_INGREDIENTS_CONSTRUCTOR,
-} from "../action-creators/ingredients-constructor-creators";
+} from "../constants";
+import { TIngredientConstructorActions } from "../actions/ingredients-constructor";
+import { IIngredient } from "../../utils/interfaces";
 
-export const initialState = {
+type TInitialState = {
+  bunsConstructor: Array<IIngredient>;
+  ingredientsConstructor: Array<IIngredient>;
+};
+
+export const initialState: TInitialState = {
   bunsConstructor: [],
   ingredientsConstructor: [],
 };
 
-export const ingredientsConstructorReducer = (state = initialState, action) => {
+export const ingredientsConstructorReducer = (
+  state = initialState,
+  action: TIngredientConstructorActions
+): TInitialState => {
   switch (action.type) {
     case ADD_BUN_CONSTRUCTOR: {
       return {
         ...state,
-        bunsConstructor: action.payload,
+        bunsConstructor: action.payload as Array<IIngredient>,
       };
     }
     case ADD_INGREDIENT_CONSTRUCTOR: {
@@ -25,7 +35,7 @@ export const ingredientsConstructorReducer = (state = initialState, action) => {
         ingredientsConstructor: [
           ...state.ingredientsConstructor,
           action.payload,
-        ],
+        ] as Array<IIngredient>,
       };
     }
     case DEL_INGREDIENT_CONSTRUCTOR: {

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { Loader } from "../components/UI/loader/loader";
 import { getIngredientsState } from "../redux/selectors/ingredient-selector";
 import { getCurrentIngredientState } from "../redux/selectors/current-ingredient-selector";
-import { fillCurrentIngredient } from "../redux/action-creators/current-ingredient-creators";
+import { fillCurrentIngredient } from "../redux/actions/current-ingredient";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 
 export const IngredientPage: FC = () => {

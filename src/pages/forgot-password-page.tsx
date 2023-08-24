@@ -9,7 +9,7 @@ import { Link, Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../hooks/useForm";
 import { getAuthState } from "../redux/selectors/auth-selector";
-import { sendResetPasswordEmail } from "../redux/action-creators/auth-creators";
+import { sendResetPasswordEmail } from "../redux/actions/auth";
 
 export const ForgotPasswordPage: FC = () => {
   const location = useLocation();

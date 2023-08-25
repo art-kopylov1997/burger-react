@@ -24,10 +24,17 @@ const AppHeader: FC = () => {
           </div>
         </NavLink>
 
-        <div className={`${classes.wrapperNav} text_color_inactive p-4`}>
-          <ListIcon type="primary" />
-          <span>Лента заказов</span>
-        </div>
+        <NavLink
+          to="/feed"
+          className={({ isActive }) =>
+            isActive ? classes.activeLink : classes.link
+          }
+        >
+          <div className={`${classes.wrapperNav} text_color_inactive p-4`}>
+            <ListIcon type="primary" />
+            <span>Лента заказов</span>
+          </div>
+        </NavLink>
       </div>
 
       <NavLink to="/">

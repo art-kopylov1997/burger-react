@@ -9,6 +9,7 @@ import {
   ProfilePage,
   NotFoundPage,
   IngredientPage,
+  FeedPage,
 } from "../../pages";
 import { ProtectedRoute } from "../protected-route";
 
@@ -26,8 +27,8 @@ const App: FC = () => {
   const background = location.state && location.state.background;
 
   useEffect(() => {
-    dispatch(getIngredients() as any);
-    dispatch(checkUserAuth() as any);
+    dispatch(getIngredients());
+    dispatch(checkUserAuth());
   }, [dispatch]);
 
   return (
@@ -60,6 +61,10 @@ const App: FC = () => {
           element={
             <ProtectedRoute onlyUnAuth={true} element={<ResetPasswordPage />} />
           }
+        />
+        <Route
+          path="/feed"
+          element={<ProtectedRoute element={<FeedPage />} />}
         />
         <Route
           path="/profile/*"

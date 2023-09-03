@@ -4,6 +4,7 @@ import { ingredientsConstructorReducer } from "./ingredients-constructor";
 import { currentIngredientReducer } from "./current-ingredient";
 import { orderingReducer } from "./ordering";
 import { authReducer } from "./auth";
+import wsSlice from "../../services/slices/wsSlice";
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers({
   currentIngredient: currentIngredientReducer,
   ordering: orderingReducer,
   registry: authReducer,
+  wsReducers: wsSlice,
 });

@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/useTypedSelector";
 import { getCurrentIngredientState } from "../../redux/selectors/current-ingredient-selector";
 import Modal from "../modal";
 import { getIngredientsState } from "../../redux/selectors/ingredient-selector";
@@ -11,13 +11,12 @@ import {
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
 const IngredientDetailsCard = () => {
-  const { name, image, calories, proteins, fat, carbohydrates } = useSelector(
-    getCurrentIngredientState
-  );
+  const { name, image, calories, proteins, fat, carbohydrates } =
+    useAppSelector(getCurrentIngredientState);
 
-  const { ingredients } = useSelector(getIngredientsState);
+  const { ingredients } = useAppSelector(getIngredientsState);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();

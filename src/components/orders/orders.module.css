@@ -1,0 +1,15 @@
+.orders {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+  margin-top: 20px;
+  list-style-type: none;
+}
+
+.subtitle {
+  width: 100%;
+  text-align: center;
+  margin: auto;
+}

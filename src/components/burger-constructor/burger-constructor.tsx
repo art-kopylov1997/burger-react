@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useModal } from "../../hooks/useModal";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/useTypedSelector";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 
@@ -28,15 +28,15 @@ import { getAuthUserState } from "../../redux/selectors/auth-selector";
 import { IIngredient } from "../../utils/interfaces";
 
 const BurgerConstructor: FC = () => {
-  const { ingredientsConstructor, bunsConstructor } = useSelector(
+  const { ingredientsConstructor, bunsConstructor } = useAppSelector(
     getIngredientsConstructorState
   );
-  const user = useSelector(getAuthUserState);
-  const { orderCost } = useSelector(getOrderingState);
+  const user = useAppSelector(getAuthUserState);
+  const { orderCost } = useAppSelector(getOrderingState);
   const { isModalOpen, openModal, closeModal } = useModal();
   const [orderNumber, setOrderNumber] = useState<number>(0);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 

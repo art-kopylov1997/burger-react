@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../hooks/useTypedSelector";
 import { useParams } from "react-router-dom";
 import { Loader } from "../components/UI/loader/loader";
 import { getIngredientsState } from "../redux/selectors/ingredient-selector";
@@ -9,11 +9,10 @@ import IngredientDetails from "../components/ingredient-details/ingredient-detai
 
 export const IngredientPage: FC = () => {
   const { ingredientsRequest, ingredientsFailed, ingredients } =
-    useSelector(getIngredientsState);
-  const { name, image, calories, proteins, fat, carbohydrates } = useSelector(
-    getCurrentIngredientState
-  );
-  const dispatch = useDispatch();
+    useAppSelector(getIngredientsState);
+  const { name, image, calories, proteins, fat, carbohydrates } =
+    useAppSelector(getCurrentIngredientState);
+  const dispatch = useAppDispatch();
   const { id } = useParams();
 
   const ingredient = useMemo(() => {

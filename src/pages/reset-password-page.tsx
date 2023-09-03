@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Navigate, useLocation } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../hooks/useTypedSelector";
 import { useForm } from "../hooks/useForm";
 import { getAuthState } from "../redux/selectors/auth-selector";
 import { sendPassword } from "../redux/actions/auth";
@@ -15,8 +15,8 @@ import { sendPassword } from "../redux/actions/auth";
 export const ResetPasswordPage: FC = () => {
   const location = useLocation();
   const { resetPasswordStarted, resetPasswordFinished } =
-    useSelector(getAuthState);
-  const dispatch = useDispatch();
+    useAppSelector(getAuthState);
+  const dispatch = useAppDispatch();
 
   const { values, handleChange } = useForm({
     emailCode: "",

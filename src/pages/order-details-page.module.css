@@ -1,0 +1,8 @@
+.root {
+  width: 640px;
+  margin: 0 auto;
+  height: calc(100vh - 128px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

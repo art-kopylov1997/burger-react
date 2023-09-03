@@ -1,0 +1,21 @@
+.image {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  background: #131316;
+  border: 2px solid #801AB2;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.imageLast {
+  position: relative;
+  background: #1C1C21;
+  opacity: 0.6;
+}
+
+.leftIngredients {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+}

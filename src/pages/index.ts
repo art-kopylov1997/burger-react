@@ -7,3 +7,4 @@ export { RegisterPage } from "./register-page";
 export { ResetPasswordPage } from "./reset-password-page";
 export { IngredientPage } from "./ingredient-page";
 export { FeedPage } from "./feed-page";
+export { OrderDetailsPage } from "./order-details-page";

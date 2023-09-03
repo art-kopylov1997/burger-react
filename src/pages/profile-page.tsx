@@ -6,16 +6,13 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getAuthUserState } from "../redux/selectors/auth-selector";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  editUserAuth,
-  logoutUser,
-} from "../redux/actions/auth";
+import { useAppSelector, useAppDispatch } from "../hooks/useTypedSelector";
+import { editUserAuth, logoutUser } from "../redux/actions/auth";
 import { useForm } from "../hooks/useForm";
 
 export const ProfilePage: FC = () => {
-  const user = useSelector(getAuthUserState);
-  const dispatch = useDispatch();
+  const user = useAppSelector(getAuthUserState);
+  const dispatch = useAppDispatch();
 
   const initValues = {
     name: user.name,

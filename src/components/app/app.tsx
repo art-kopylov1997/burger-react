@@ -63,10 +63,7 @@ const App: FC = () => {
             <ProtectedRoute onlyUnAuth={true} element={<ResetPasswordPage />} />
           }
         />
-        <Route
-          path="/feed"
-          element={<ProtectedRoute element={<FeedPage />} />}
-        />
+        <Route path="/feed" element={<FeedPage />} />
         <Route path="/feed/:orderId" element={<OrderDetailsPage />} />
         <Route
           path="/profile/*"

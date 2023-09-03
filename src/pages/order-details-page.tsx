@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
-import OrderDetails from "../components/order-details";
+import OrderDetailsCard from "../components/order-details-card";
 import { Loader } from "../components/UI/loader/loader";
 import { useAppSelector } from "../hooks/useTypedSelector";
 import { useWebSocket } from "../hooks/useWebSocket";
@@ -49,7 +49,7 @@ export const OrderDetailsPage: FC = () => {
     <Loader size="medium" />
   ) : order ? (
     <section className={classes.root}>
-      <OrderDetails orderNumber={order} />
+      <OrderDetailsCard order={order} />
     </section>
   ) : (
     <NotFoundPage />

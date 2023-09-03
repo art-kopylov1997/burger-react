@@ -1,0 +1,28 @@
+.navContainer {
+  margin-top: 100px;
+}
+.navigation {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+}
+
+.link {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  transition: .8s;
+  text-decoration: none;
+}
+
+.link:active {
+  color: #F2F2F3;
+}
+
+.link:hover {
+  color: #F2F2F3;
+}
+
+.description {
+  max-width: 320px;
+}

@@ -1,17 +1,20 @@
 import React, { FC, SyntheticEvent, useCallback, useMemo } from "react";
-import classes from "./profile-page.module.css";
+import { NavLink } from "react-router-dom";
+import classes from "./profile-container.module.css";
 import {
   Button,
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getAuthUserState } from "../redux/selectors/auth-selector";
-import { useAppSelector, useAppDispatch } from "../hooks/useTypedSelector";
-import { editUserAuth, logoutUser } from "../redux/actions/auth";
-import { useForm } from "../hooks/useForm";
-import { NavLink } from "react-router-dom";
+import { getAuthUserState } from "../../../redux/selectors/auth-selector";
+import {
+  useAppSelector,
+  useAppDispatch,
+} from "../../../hooks/useTypedSelector";
+import { editUserAuth, logoutUser } from "../../../redux/actions/auth";
+import { useForm } from "../../../hooks/useForm";
 
-export const ProfilePage: FC = () => {
+const ProfileContainer: FC = () => {
   const user = useAppSelector(getAuthUserState);
   const dispatch = useAppDispatch();
 
@@ -65,12 +68,12 @@ export const ProfilePage: FC = () => {
             История заказов
           </p>
         </NavLink>
-        <p
+        <span
           className={`${classes.menuElement} text text_type_main-medium text_color_inactive`}
           onClick={handleLogout}
         >
           Выход
-        </p>
+        </span>
         <p
           className={`${classes.menuElement} mt-20 text text_type_main-default text_color_inactive`}
         >
@@ -121,3 +124,5 @@ export const ProfilePage: FC = () => {
     </form>
   );
 };
+
+export default ProfileContainer;

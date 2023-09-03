@@ -1,4 +1,6 @@
+import { FC, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+
 import AppHeader from "../app-header";
 import {
   HomePage,
@@ -6,21 +8,19 @@ import {
   RegisterPage,
   ForgotPasswordPage,
   ResetPasswordPage,
-  ProfilePage,
   NotFoundPage,
   IngredientPage,
   FeedPage,
   OrderDetailsPage,
 } from "../../pages";
 import { ProtectedRoute } from "../protected-route";
-
-import { useEffect } from "react";
 import { useAppDispatch } from "../../hooks/useTypedSelector";
 import { getIngredients } from "../../redux/actions/ingredients";
 import { checkUserAuth } from "../../redux/actions/auth";
 import ErrorBoundary from "../../helpers/error-boundry";
 import IngredientDetailsCard from "../ingredient-details";
-import { FC } from "react";
+import Profile from "../../pages/profile/profile";
+import ProfileOrders from "../../pages/profile/profile-orders/profile-orders";
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -64,9 +64,18 @@ const App: FC = () => {
           }
         />
         <Route path="/feed" element={<FeedPage />} />
+        {/*<Route*/}
+        {/*  path="/profile"*/}
+        {/*  element={<ProtectedRoute element={<ProfilePage />} />}*/}
+        {/*/>        */}
+
         <Route
-          path="/profile/*"
-          element={<ProtectedRoute element={<ProfilePage />} />}
+          path="/profile"
+          element={<ProtectedRoute element={<Profile />} />}
+        />
+        <Route
+          path="/profile/orders"
+          element={<ProtectedRoute element={<ProfileOrders />} />}
         />
         <Route path="/ingredients/:id" element={<IngredientPage />} />
 

@@ -4,6 +4,10 @@
   gap: 60px;
 }
 
+.link {
+  text-decoration: none;
+}
+
 .wrapperLinks {
   display: flex;
   flex-direction: column;

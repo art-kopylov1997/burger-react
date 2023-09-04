@@ -89,6 +89,10 @@ const App: FC = () => {
         <Routes>
           <Route path="/ingredients/:id" element={<IngredientDetailsCard />} />
           <Route path="/feed/:orderId" element={<OrderDetailsPage />} />
+          <Route
+            path="/profile/orders/:orderId"
+            element={<OrderDetailsPage />}
+          />
         </Routes>
       )}
     </ErrorBoundary>

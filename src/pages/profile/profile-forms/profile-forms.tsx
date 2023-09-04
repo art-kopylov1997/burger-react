@@ -1,17 +1,21 @@
-import React, { FC, SyntheticEvent, useCallback, useMemo } from "react";
-import classes from "./profile-page.module.css";
+import React, { FC, SyntheticEvent, useMemo } from "react";
 import {
   Button,
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getAuthUserState } from "../redux/selectors/auth-selector";
-import { useAppSelector, useAppDispatch } from "../hooks/useTypedSelector";
-import { editUserAuth, logoutUser } from "../redux/actions/auth";
-import { useForm } from "../hooks/useForm";
-import { NavLink } from "react-router-dom";
 
-export const ProfilePage: FC = () => {
+import classes from "./profile-forms.module.css";
+
+import { getAuthUserState } from "../../../redux/selectors/auth-selector";
+import {
+  useAppSelector,
+  useAppDispatch,
+} from "../../../hooks/useTypedSelector";
+import { editUserAuth } from "../../../redux/actions/auth";
+import { useForm } from "../../../hooks/useForm";
+
+export const ProfileForms: FC = () => {
   const user = useAppSelector(getAuthUserState);
   const dispatch = useAppDispatch();
 
@@ -40,45 +44,9 @@ export const ProfilePage: FC = () => {
     dispatch(editUserAuth(values) as any);
   };
 
-  const handleLogout = useCallback(
-    (e: SyntheticEvent) => {
-      e.preventDefault();
-      dispatch(logoutUser() as any);
-    },
-    [dispatch]
-  );
-
   return (
     <form className={classes.root} onSubmit={onSubmit}>
-      <div className={classes.wrapperLinks}>
-        <NavLink to="/profile" className={classes.link}>
-          <p
-            className={`${classes.menuElement} text text_type_main-medium text_color_primary`}
-          >
-            Профиль
-          </p>
-        </NavLink>
-        <NavLink to="/profile/orders" className={classes.link}>
-          <p
-            className={`${classes.menuElement} text text_type_main-medium text_color_inactive`}
-          >
-            История заказов
-          </p>
-        </NavLink>
-        <p
-          className={`${classes.menuElement} text text_type_main-medium text_color_inactive`}
-          onClick={handleLogout}
-        >
-          Выход
-        </p>
-        <p
-          className={`${classes.menuElement} mt-20 text text_type_main-default text_color_inactive`}
-        >
-          В этом разделе вы можете изменить свои персональные данные
-        </p>
-      </div>
-
-      <div className={classes.wrapperInputs}>
+      <div className={classes.blockInputs}>
         <Input
           name="name"
           value={values.name}

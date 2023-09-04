@@ -5,13 +5,10 @@ import OrderDetailsCard from "../components/order-details-card";
 import { Loader } from "../components/UI/loader/loader";
 import { useAppSelector } from "../hooks/useTypedSelector";
 import { useWebSocket } from "../hooks/useWebSocket";
-import {
-  ACCESS_TOKEN,
-  WSS_FOR_ALL_ORDERS,
-  WSS_FOR_PROFILE_ORDERS,
-} from "../utils/constans";
+import { WSS_FOR_ALL_ORDERS, WSS_FOR_PROFILE_ORDERS } from "../utils/constans";
 import { NotFoundPage } from "./not-found-page";
 import Modal from "../components/modal";
+import { getCookie } from "../helpers/cookie-helper";
 
 import classes from "./order-details-page.module.css";
 
@@ -30,10 +27,7 @@ export const OrderDetailsPage: FC = () => {
     [feedOrders]
   );
 
-  const accessToken = useMemo(
-    () => localStorage.getItem(ACCESS_TOKEN)?.replace("Bearer ", ""),
-    [localStorage.getItem(ACCESS_TOKEN)]
-  );
+  const accessToken = getCookie("token")?.replace("Bearer ", "");
 
   const closeModal = useCallback(() => {
     location?.state?.background && navigate(location.state.background);

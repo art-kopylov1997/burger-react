@@ -21,6 +21,7 @@ import ErrorBoundary from "../../helpers/error-boundry";
 import IngredientDetailsCard from "../ingredient-details";
 import Profile from "../../pages/profile/profile";
 import ProfileOrders from "../../pages/profile/profile-orders/profile-orders";
+import { ProfileForms } from "../../pages/profile/profile-forms/profile-forms";
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -64,23 +65,26 @@ const App: FC = () => {
           }
         />
         <Route path="/feed" element={<FeedPage />} />
-        {/*<Route*/}
-        {/*  path="/profile"*/}
-        {/*  element={<ProtectedRoute element={<ProfilePage />} />}*/}
-        {/*/>        */}
 
         <Route
           path="/profile"
           element={<ProtectedRoute element={<Profile />} />}
-        />
-        <Route
-          path="/profile/orders"
-          element={<ProtectedRoute element={<ProfileOrders />} />}
-        />
+        >
+          <Route
+            path=""
+            element={<ProtectedRoute element={<ProfileForms />} />}
+          />
+          <Route
+            path="orders"
+            element={<ProtectedRoute element={<ProfileOrders />} />}
+          />
+        </Route>
+
         <Route path="/ingredients/:id" element={<IngredientPage />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+
       {background && (
         <Routes>
           <Route path="/ingredients/:id" element={<IngredientDetailsCard />} />

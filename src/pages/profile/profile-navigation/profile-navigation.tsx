@@ -1,48 +1,49 @@
-import { FC } from "react";
+import React, { FC, SyntheticEvent, useCallback } from "react";
 import { NavLink } from "react-router-dom";
+
+import classes from "./profile-navigation.module.css";
 
 import { useAppDispatch } from "../../../hooks/useTypedSelector";
 import { logoutUser } from "../../../redux/actions/auth";
 
-import classes from "./profile-navigation.module.css";
-
-const ProfileNavigation: FC = () => {
+export const ProfileNavigation: FC = () => {
   const dispatch = useAppDispatch();
 
-  const handleLogout = () => {
-    dispatch(logoutUser() as any);
-  };
+  const handleLogout = useCallback(
+    (e: SyntheticEvent) => {
+      e.preventDefault();
+      dispatch(logoutUser() as any);
+    },
+    [dispatch]
+  );
 
   return (
-    <div className={classes.navContainer}>
-      <nav className={`text text_type_main-medium ${classes.navigation}`}>
-        <NavLink
-          to="/profile"
-          className={`link text_color_inactive ${classes.link}`}
+    <div className={classes.root}>
+      <NavLink to="/profile" className={classes.link}>
+        <p
+          className={`${classes.menuElement} text text_type_main-medium text_color_primary`}
         >
           Профиль
-        </NavLink>
-
-        <NavLink
-          to="/profile/orders"
-          className={`link text_color_inactive ${classes.link}`}
+        </p>
+      </NavLink>
+      <NavLink to="/profile/orders" className={classes.link}>
+        <p
+          className={`${classes.menuElement} text text_type_main-medium text_color_inactive`}
         >
           История заказов
-        </NavLink>
-      </nav>
+        </p>
+      </NavLink>
       <span
-        className={`button text_type_main-medium text_color_inactive ${classes.link}`}
+        className={`${classes.menuElement} text text_type_main-medium text_color_inactive`}
         onClick={handleLogout}
       >
         Выход
       </span>
       <p
-        className={`mt-20 text text_type_main-default text_color_inactive ${classes.description}`}
+        className={`${classes.menuElement} mt-20 text text_type_main-default text_color_inactive`}
       >
-        В этом разделе вы можете изменить&#160;свои персональные данные
+        В этом разделе вы можете изменить свои персональные данные
       </p>
     </div>
   );
 };
-
-export default ProfileNavigation;

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { FC, useCallback, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/useTypedSelector";
 import { getCurrentIngredientState } from "../../redux/selectors/current-ingredient-selector";
 import Modal from "../modal";
@@ -10,7 +10,7 @@ import {
 } from "../../redux/actions/current-ingredient";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
-const IngredientDetailsCard = () => {
+const IngredientDetailsCard: FC = () => {
   const { name, image, calories, proteins, fat, carbohydrates } =
     useAppSelector(getCurrentIngredientState);
 

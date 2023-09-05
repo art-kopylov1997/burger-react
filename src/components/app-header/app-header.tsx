@@ -1,12 +1,13 @@
+import { FC } from "react";
 import { NavLink } from "react-router-dom";
-import classes from "./app-header.module.css";
 import {
   Logo,
   BurgerIcon,
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { FC } from "react";
+
+import classes from "./app-header.module.css";
 
 const AppHeader: FC = () => {
   return (
@@ -30,7 +31,7 @@ const AppHeader: FC = () => {
             isActive ? classes.activeLink : classes.link
           }
         >
-          <div className={`${classes.wrapperNav} text_color_inactive p-4`}>
+          <div className={`${classes.wrapperNav} p-4`}>
             <ListIcon type="primary" />
             <span>Лента заказов</span>
           </div>

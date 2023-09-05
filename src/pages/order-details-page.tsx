@@ -1,21 +1,19 @@
-import React, { FC, useCallback, useEffect, useMemo } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { FC, useEffect, useMemo } from "react";
+import { useLocation, useParams } from "react-router-dom";
 
-import OrderDetailsCard from "../components/order-details-card";
 import { Loader } from "../components/UI/loader/loader";
 import { useAppSelector } from "../hooks/useTypedSelector";
-import { useWebSocket } from "../hooks/useWebSocket";
+import { socketMiddleware } from "../redux/middlewears/socketMiddleware";
 import { WSS_FOR_ALL_ORDERS, WSS_FOR_PROFILE_ORDERS } from "../utils/constans";
 import { NotFoundPage } from "./not-found-page";
-import Modal from "../components/modal";
+import OrderDetails from "../components/order-details";
 import { getCookie } from "../helpers/cookie-helper";
 
 import classes from "./order-details-page.module.css";
 
 export const OrderDetailsPage: FC = () => {
-  const { connect, closeWs } = useWebSocket();
+  const { connect, closeWs } = socketMiddleware();
   const location = useLocation();
-  const navigate = useNavigate();
   const feedOrders = useAppSelector(
     (store) => store.wsReducers.wsMessage?.orders
   );
@@ -28,10 +26,6 @@ export const OrderDetailsPage: FC = () => {
   );
 
   const accessToken = getCookie("token")?.replace("Bearer ", "");
-
-  const closeModal = useCallback(() => {
-    location?.state?.background && navigate(location.state.background);
-  }, [location.state, navigate]);
 
   useEffect(() => {
     if (location.pathname === `/feed/${orderId}`) {
@@ -46,12 +40,10 @@ export const OrderDetailsPage: FC = () => {
   }, []);
 
   return !feedOrders?.length ? (
-    <Loader size="medium" />
+    <Loader size="large" />
   ) : order ? (
     <section className={classes.root}>
-      <Modal title="" closeModal={closeModal}>
-        <OrderDetailsCard order={order} />
-      </Modal>
+      <OrderDetails order={order} />
     </section>
   ) : (
     <NotFoundPage />

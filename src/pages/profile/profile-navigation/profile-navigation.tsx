@@ -19,17 +19,23 @@ export const ProfileNavigation: FC = () => {
 
   return (
     <div className={classes.root}>
-      <NavLink to="/profile" className={classes.link}>
-        <p
-          className={`${classes.menuElement} text text_type_main-medium text_color_primary`}
-        >
+      <NavLink
+        to="/profile"
+        className={({ isActive }) =>
+          isActive ? classes.activeLink : classes.link
+        }
+      >
+        <p className={`${classes.menuElement} text text_type_main-medium`}>
           Профиль
         </p>
       </NavLink>
-      <NavLink to="/profile/orders" className={classes.link}>
-        <p
-          className={`${classes.menuElement} text text_type_main-medium text_color_inactive`}
-        >
+      <NavLink
+        to="/profile/orders"
+        className={({ isActive }) =>
+          isActive ? classes.activeLink : classes.link
+        }
+      >
+        <p className={`${classes.menuElement} text text_type_main-medium`}>
           История заказов
         </p>
       </NavLink>
@@ -39,9 +45,7 @@ export const ProfileNavigation: FC = () => {
       >
         Выход
       </span>
-      <p
-        className={`${classes.menuElement} mt-20 text text_type_main-default text_color_inactive`}
-      >
+      <p className="mt-20 text text_type_main-default text_color_inactive">
         В этом разделе вы можете изменить свои персональные данные
       </p>
     </div>

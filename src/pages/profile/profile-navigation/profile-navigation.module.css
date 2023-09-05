@@ -6,6 +6,12 @@
 }
 
 .link {
+  color: #8585ad;
+  text-decoration: none;
+}
+
+.activeLink {
+  color: #ffffff;
   text-decoration: none;
 }
 

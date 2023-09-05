@@ -22,6 +22,7 @@ import IngredientDetailsCard from "../ingredient-details";
 import Profile from "../../pages/profile/profile";
 import ProfileOrders from "../../pages/profile/profile-orders/profile-orders";
 import { ProfileForms } from "../../pages/profile/profile-forms/profile-forms";
+import OrderDetailsCard from "../order-details-card";
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -64,7 +65,11 @@ const App: FC = () => {
             <ProtectedRoute onlyUnAuth={true} element={<ResetPasswordPage />} />
           }
         />
+
+        <Route path="/ingredients/:id" element={<IngredientPage />} />
+
         <Route path="/feed" element={<FeedPage />} />
+        <Route path="/feed/:orderId" element={<OrderDetailsPage />} />
 
         <Route
           path="/profile"
@@ -79,8 +84,10 @@ const App: FC = () => {
             element={<ProtectedRoute element={<ProfileOrders />} />}
           />
         </Route>
-
-        <Route path="/ingredients/:id" element={<IngredientPage />} />
+        <Route
+          path="/profile/orders/:orderId"
+          element={<ProtectedRoute element={<OrderDetailsCard />} />}
+        />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
@@ -88,10 +95,10 @@ const App: FC = () => {
       {background && (
         <Routes>
           <Route path="/ingredients/:id" element={<IngredientDetailsCard />} />
-          <Route path="/feed/:orderId" element={<OrderDetailsPage />} />
+          <Route path="/feed/:orderId" element={<OrderDetailsCard />} />
           <Route
             path="/profile/orders/:orderId"
-            element={<OrderDetailsPage />}
+            element={<ProtectedRoute element={<OrderDetailsCard />} />}
           />
         </Routes>
       )}

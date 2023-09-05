@@ -12,7 +12,7 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal";
-import OrderDetails from "../order-details";
+import OrderIdentifier from "../order-identifier";
 import { createOrder } from "../../services/api/norma-client-service";
 import ConstructorIngredientList from "../constructor-ingredient-list";
 import {
@@ -26,6 +26,7 @@ import { setOrderCost } from "../../redux/actions/ordering";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAuthUserState } from "../../redux/selectors/auth-selector";
 import { IIngredient } from "../../utils/interfaces";
+import { getCookie } from "../../helpers/cookie-helper";
 
 const BurgerConstructor: FC = () => {
   const { ingredientsConstructor, bunsConstructor } = useAppSelector(
@@ -54,10 +55,12 @@ const BurgerConstructor: FC = () => {
       ...idsBunsConstructor,
     ];
 
+    const accessToken = getCookie("token")?.replace("Bearer ", "");
+
     if (!user) {
       navigate("/login", { state: location, replace: true });
     } else {
-      const data = await createOrder(idsIngredients);
+      const data = await createOrder(idsIngredients, accessToken);
       const result = data.order.number;
       setOrderNumber(result);
       dispatch(clearListConstructor());
@@ -156,8 +159,8 @@ const BurgerConstructor: FC = () => {
             Оформить заказ
           </Button>
           {isModalOpen && (
-            <Modal title="" closeModal={closeModal}>
-              <OrderDetails orderNumber={orderNumber} />
+            <Modal closeModal={closeModal}>
+              <OrderIdentifier orderNumber={orderNumber} />
             </Modal>
           )}
         </div>

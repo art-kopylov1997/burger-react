@@ -1,5 +1,6 @@
 import React, { FC, SyntheticEvent, useCallback } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import cn from "classnames";
 
 import classes from "./profile-navigation.module.css";
 
@@ -7,6 +8,7 @@ import { useAppDispatch } from "../../../hooks/useTypedSelector";
 import { logoutUser } from "../../../redux/actions/auth";
 
 export const ProfileNavigation: FC = () => {
+  const location = useLocation();
   const dispatch = useAppDispatch();
 
   const handleLogout = useCallback(
@@ -21,9 +23,9 @@ export const ProfileNavigation: FC = () => {
     <div className={classes.root}>
       <NavLink
         to="/profile"
-        className={({ isActive }) =>
-          isActive ? classes.activeLink : classes.link
-        }
+        className={cn(classes.link, {
+          [classes.activeLink]: location.pathname === "/profile",
+        })}
       >
         <p className={`${classes.menuElement} text text_type_main-medium`}>
           Профиль
@@ -31,9 +33,9 @@ export const ProfileNavigation: FC = () => {
       </NavLink>
       <NavLink
         to="/profile/orders"
-        className={({ isActive }) =>
-          isActive ? classes.activeLink : classes.link
-        }
+        className={cn(classes.link, {
+          [classes.activeLink]: location.pathname === "/profile/orders",
+        })}
       >
         <p className={`${classes.menuElement} text text_type_main-medium`}>
           История заказов

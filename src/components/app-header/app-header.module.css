@@ -22,6 +22,10 @@
   color: #8585ad;
 }
 
+.link:hover {
+  color: #bfbfdf;
+}
+
 .activeLink {
   text-decoration: none;
   color: #ffffff;

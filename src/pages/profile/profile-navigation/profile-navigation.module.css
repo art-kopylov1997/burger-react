@@ -10,6 +10,10 @@
   text-decoration: none;
 }
 
+.link:hover {
+  color: #bfbfdf;
+}
+
 .activeLink {
   color: #ffffff;
   text-decoration: none;

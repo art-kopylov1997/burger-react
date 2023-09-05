@@ -1,23 +1,26 @@
 import { FC } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   Logo,
   BurgerIcon,
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import cn from "classnames";
 
 import classes from "./app-header.module.css";
 
 const AppHeader: FC = () => {
+  const location = useLocation();
+
   return (
     <header className={`${classes.header} text text_type_main-default m-10`}>
       <div className={`${classes.root} pl-20`}>
         <NavLink
           to="/"
-          className={({ isActive }) =>
-            isActive ? classes.activeLink : classes.link
-          }
+          className={cn(classes.link, {
+            [classes.activeLink]: location.pathname === "/",
+          })}
         >
           <div className={`${classes.wrapperNav} p-4`}>
             <BurgerIcon type="primary" />
@@ -27,9 +30,9 @@ const AppHeader: FC = () => {
 
         <NavLink
           to="/feed"
-          className={({ isActive }) =>
-            isActive ? classes.activeLink : classes.link
-          }
+          className={cn(classes.link, {
+            [classes.activeLink]: location.pathname === "/feed",
+          })}
         >
           <div className={`${classes.wrapperNav} p-4`}>
             <ListIcon type="primary" />
@@ -44,9 +47,9 @@ const AppHeader: FC = () => {
 
       <NavLink
         to="/profile"
-        className={({ isActive }) =>
-          isActive ? classes.activeLink : classes.link
-        }
+        className={cn(classes.link, {
+          [classes.activeLink]: location.pathname === "/profile",
+        })}
       >
         <div className={`${classes.wrapperNav} pr-25`}>
           <ProfileIcon type="primary" />

@@ -1,11 +1,11 @@
 import { useRef } from "react";
 
-import { getUser } from "../../services/api/norma-client-service";
-import { wsActions } from "../../services/slices/wsSlice";
+import { getUser } from "../services/api/norma-client-service";
+import { wsActions } from "../services/slices/wsSlice";
 
-import { useAppDispatch } from "../../hooks/useTypedSelector";
+import { useAppDispatch } from "./useTypedSelector";
 
-export const socketMiddleware = () => {
+export const useWebSocket = () => {
   const dispatch = useAppDispatch();
   const ws = useRef<WebSocket | null>(null);
 

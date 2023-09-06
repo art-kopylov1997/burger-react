@@ -55,12 +55,10 @@ const BurgerConstructor: FC = () => {
       ...idsBunsConstructor,
     ];
 
-    const accessToken = getCookie("token")?.replace("Bearer ", "");
-
     if (!user) {
       navigate("/login", { state: location, replace: true });
     } else {
-      const data = await createOrder(idsIngredients, accessToken);
+      const data = await createOrder(idsIngredients);
       const result = data.order.number;
       setOrderNumber(result);
       dispatch(clearListConstructor());

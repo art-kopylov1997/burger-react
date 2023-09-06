@@ -15,6 +15,7 @@ export function postRequest<TRequest, TResponse>(url: string, body: TRequest) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: getCookie("token") ?? "",
     },
     body: JSON.stringify(body),
   }).then(checkResponse<TResponse>);

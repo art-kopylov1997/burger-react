@@ -38,12 +38,9 @@ export function getAllIngredients() {
   );
 }
 
-export function createOrder(
-  payload: Array<string>,
-  accessToken?: string
-): Promise<any> {
+export function createOrder(payload: Array<string>): Promise<any> {
   return postRequest<TCreateOrderRequest, TCreateOrderResponse>(
-    `${BASE_URL}/orders?token=${accessToken}`,
+    `${BASE_URL}/orders`,
     { ingredients: payload }
   ).then(checkSuccess);
 }

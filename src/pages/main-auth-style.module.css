@@ -21,11 +21,6 @@
     text-decoration: none;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-}
-
 .content {
     margin: auto;
 }

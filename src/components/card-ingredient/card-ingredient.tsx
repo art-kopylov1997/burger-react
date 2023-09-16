@@ -1,6 +1,6 @@
 import React from "react";
 import { FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../hooks/useTypedSelector";
 import { useDrag } from "react-dnd";
 
 import classes from "./card-ingredient.module.css";
@@ -20,7 +20,7 @@ interface ICardIngredient {
 
 const CardIngredient: FC<ICardIngredient> = ({ ingredient }) => {
   const { name, image, price } = ingredient;
-  const { ingredientsConstructor, bunsConstructor } = useSelector(
+  const { ingredientsConstructor, bunsConstructor } = useAppSelector(
     getIngredientsConstructorState
   );
   const [ingredientCounter, setIngredientCounter] = useState(0);

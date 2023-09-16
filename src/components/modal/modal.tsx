@@ -6,7 +6,7 @@ import ModalOverlay from "./modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 interface IModal {
-  title: string;
+  title?: string;
   closeModal: () => void;
 }
 

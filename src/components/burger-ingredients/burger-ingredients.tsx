@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef, FC } from "react";
 import classes from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../hooks/useTypedSelector";
 import ListIngredients from "../list-ingredients/list-ingredients";
 import { getIngredientsState } from "../../redux/selectors/ingredient-selector";
 
 const BurgerIngredients: FC = () => {
-  const { ingredients, ingredientsFailed } = useSelector(getIngredientsState);
+  const { ingredients, ingredientsFailed } =
+    useAppSelector(getIngredientsState);
   const [currentType, setCurrentType] = useState<string>("bun");
 
   const setTab = (tab: string) => {

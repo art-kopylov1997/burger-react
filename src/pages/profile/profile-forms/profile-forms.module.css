@@ -1,0 +1,11 @@
+.root {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+}
+
+.blockInputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

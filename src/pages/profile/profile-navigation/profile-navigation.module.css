@@ -1,0 +1,24 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  gap: 20px;
+}
+
+.link {
+  color: #8585ad;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #bfbfdf;
+}
+
+.activeLink {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.menuElement:hover {
+  cursor: pointer;
+}

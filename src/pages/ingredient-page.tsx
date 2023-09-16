@@ -1,19 +1,18 @@
 import React, { FC, useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../hooks/useTypedSelector";
 import { useParams } from "react-router-dom";
 import { Loader } from "../components/UI/loader/loader";
 import { getIngredientsState } from "../redux/selectors/ingredient-selector";
 import { getCurrentIngredientState } from "../redux/selectors/current-ingredient-selector";
-import { fillCurrentIngredient } from "../redux/action-creators/current-ingredient-creators";
+import { fillCurrentIngredient } from "../redux/actions/current-ingredient";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 
 export const IngredientPage: FC = () => {
   const { ingredientsRequest, ingredientsFailed, ingredients } =
-    useSelector(getIngredientsState);
-  const { name, image, calories, proteins, fat, carbohydrates } = useSelector(
-    getCurrentIngredientState
-  );
-  const dispatch = useDispatch();
+    useAppSelector(getIngredientsState);
+  const { name, image, calories, proteins, fat, carbohydrates } =
+    useAppSelector(getCurrentIngredientState);
+  const dispatch = useAppDispatch();
   const { id } = useParams();
 
   const ingredient = useMemo(() => {

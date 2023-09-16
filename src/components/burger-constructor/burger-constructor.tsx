@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useModal } from "../../hooks/useModal";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/useTypedSelector";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 
@@ -12,31 +12,32 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal";
-import OrderDetails from "../order-details";
+import OrderIdentifier from "../order-identifier";
 import { createOrder } from "../../services/api/norma-client-service";
 import ConstructorIngredientList from "../constructor-ingredient-list";
 import {
   addIngredientConstructor,
   clearListConstructor,
   delIngredientConstructor,
-} from "../../redux/action-creators/ingredients-constructor-creators";
+} from "../../redux/actions/ingredients-constructor";
 import { getIngredientsConstructorState } from "../../redux/selectors/ingredients-constructor-selector";
 import { getOrderingState } from "../../redux/selectors/ordering-selector";
-import { setOrderCost } from "../../redux/action-creators/ordering-creators";
+import { setOrderCost } from "../../redux/actions/ordering";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAuthUserState } from "../../redux/selectors/auth-selector";
 import { IIngredient } from "../../utils/interfaces";
+import { getCookie } from "../../helpers/cookie-helper";
 
 const BurgerConstructor: FC = () => {
-  const { ingredientsConstructor, bunsConstructor } = useSelector(
+  const { ingredientsConstructor, bunsConstructor } = useAppSelector(
     getIngredientsConstructorState
   );
-  const user = useSelector(getAuthUserState);
-  const { orderCost } = useSelector(getOrderingState);
+  const user = useAppSelector(getAuthUserState);
+  const { orderCost } = useAppSelector(getOrderingState);
   const { isModalOpen, openModal, closeModal } = useModal();
   const [orderNumber, setOrderNumber] = useState<number>(0);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -156,8 +157,8 @@ const BurgerConstructor: FC = () => {
             Оформить заказ
           </Button>
           {isModalOpen && (
-            <Modal title="" closeModal={closeModal}>
-              <OrderDetails orderNumber={orderNumber} />
+            <Modal closeModal={closeModal}>
+              <OrderIdentifier orderNumber={orderNumber} />
             </Modal>
           )}
         </div>

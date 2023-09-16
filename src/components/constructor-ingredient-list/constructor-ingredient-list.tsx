@@ -1,6 +1,6 @@
-import { useDispatch } from "react-redux";
 import { FC, useCallback } from "react";
-import { updateListConstructor } from "../../redux/action-creators/ingredients-constructor-creators";
+import { useAppDispatch } from "../../hooks/useTypedSelector";
+import { updateListConstructor } from "../../redux/actions/ingredients-constructor";
 import ConstructorElementWrapper from "../constructor-element-wrapper";
 import { IIngredient } from "../../utils/interfaces";
 
@@ -13,7 +13,7 @@ const ConstructorIngredientList: FC<IConstructorIngredientList> = ({
   ingredients,
   deleteItem,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const moveCard = useCallback(
     (dragIndex: number, hoverIndex: number) => {

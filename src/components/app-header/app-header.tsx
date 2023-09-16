@@ -1,22 +1,26 @@
-import { NavLink } from "react-router-dom";
-import classes from "./app-header.module.css";
+import { FC } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   Logo,
   BurgerIcon,
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { FC } from "react";
+import cn from "classnames";
+
+import classes from "./app-header.module.css";
 
 const AppHeader: FC = () => {
+  const location = useLocation();
+
   return (
     <header className={`${classes.header} text text_type_main-default m-10`}>
       <div className={`${classes.root} pl-20`}>
         <NavLink
           to="/"
-          className={({ isActive }) =>
-            isActive ? classes.activeLink : classes.link
-          }
+          className={cn(classes.link, {
+            [classes.activeLink]: location.pathname === "/",
+          })}
         >
           <div className={`${classes.wrapperNav} p-4`}>
             <BurgerIcon type="primary" />
@@ -24,10 +28,17 @@ const AppHeader: FC = () => {
           </div>
         </NavLink>
 
-        <div className={`${classes.wrapperNav} text_color_inactive p-4`}>
-          <ListIcon type="primary" />
-          <span>Лента заказов</span>
-        </div>
+        <NavLink
+          to="/feed"
+          className={cn(classes.link, {
+            [classes.activeLink]: location.pathname === "/feed",
+          })}
+        >
+          <div className={`${classes.wrapperNav} p-4`}>
+            <ListIcon type="primary" />
+            <span>Лента заказов</span>
+          </div>
+        </NavLink>
       </div>
 
       <NavLink to="/">
@@ -36,9 +47,9 @@ const AppHeader: FC = () => {
 
       <NavLink
         to="/profile"
-        className={({ isActive }) =>
-          isActive ? classes.activeLink : classes.link
-        }
+        className={cn(classes.link, {
+          [classes.activeLink]: location.pathname === "/profile",
+        })}
       >
         <div className={`${classes.wrapperNav} pr-25`}>
           <ProfileIcon type="primary" />

@@ -1,0 +1,12 @@
+.title {
+  max-width: 1240px;
+  margin: 40px auto 20px;
+}
+
+.feedContainer {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  height: 80vh;
+  overflow: auto;
+}

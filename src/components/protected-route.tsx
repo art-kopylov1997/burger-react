@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../hooks/useTypedSelector";
 import {
   getAuthState,
   getAuthUserState,
@@ -15,8 +15,8 @@ export const ProtectedRoute: FC<IProtectedRouteProps> = ({
   onlyUnAuth = false,
   element,
 }) => {
-  const { authChecked } = useSelector(getAuthState);
-  const user = useSelector(getAuthUserState);
+  const { authChecked } = useAppSelector(getAuthState);
+  const user = useAppSelector(getAuthUserState);
   const location = useLocation();
 
   if (!authChecked) return null;

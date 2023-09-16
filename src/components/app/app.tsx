@@ -1,4 +1,6 @@
+import { FC, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+
 import AppHeader from "../app-header";
 import {
   HomePage,
@@ -6,28 +8,30 @@ import {
   RegisterPage,
   ForgotPasswordPage,
   ResetPasswordPage,
-  ProfilePage,
   NotFoundPage,
   IngredientPage,
+  FeedPage,
+  OrderDetailsPage,
 } from "../../pages";
 import { ProtectedRoute } from "../protected-route";
-
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getIngredients } from "../../redux/action-creators/ingredients-creators";
-import { checkUserAuth } from "../../redux/action-creators/auth-creators";
+import { useAppDispatch } from "../../hooks/useTypedSelector";
+import { getIngredients } from "../../redux/actions/ingredients";
+import { checkUserAuth } from "../../redux/actions/auth";
 import ErrorBoundary from "../../helpers/error-boundry";
 import IngredientDetailsCard from "../ingredient-details";
-import { FC } from "react";
+import Profile from "../../pages/profile/profile";
+import ProfileOrders from "../../pages/profile/profile-orders/profile-orders";
+import { ProfileForms } from "../../pages/profile/profile-forms/profile-forms";
+import OrderDetailsCard from "../order-details-card";
 
 const App: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const background = location.state && location.state.background;
 
   useEffect(() => {
-    dispatch(getIngredients() as any);
-    dispatch(checkUserAuth() as any);
+    dispatch(getIngredients());
+    dispatch(checkUserAuth());
   }, [dispatch]);
 
   return (
@@ -61,17 +65,41 @@ const App: FC = () => {
             <ProtectedRoute onlyUnAuth={true} element={<ResetPasswordPage />} />
           }
         />
-        <Route
-          path="/profile/*"
-          element={<ProtectedRoute element={<ProfilePage />} />}
-        />
+
         <Route path="/ingredients/:id" element={<IngredientPage />} />
+
+        <Route path="/feed" element={<FeedPage />} />
+        <Route path="/feed/:orderId" element={<OrderDetailsPage />} />
+
+        <Route
+          path="/profile"
+          element={<ProtectedRoute element={<Profile />} />}
+        >
+          <Route
+            path=""
+            element={<ProtectedRoute element={<ProfileForms />} />}
+          />
+          <Route
+            path="orders"
+            element={<ProtectedRoute element={<ProfileOrders />} />}
+          />
+        </Route>
+        <Route
+          path="/profile/orders/:orderId"
+          element={<ProtectedRoute element={<OrderDetailsCard />} />}
+        />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+
       {background && (
         <Routes>
           <Route path="/ingredients/:id" element={<IngredientDetailsCard />} />
+          <Route path="/feed/:orderId" element={<OrderDetailsCard />} />
+          <Route
+            path="/profile/orders/:orderId"
+            element={<ProtectedRoute element={<OrderDetailsCard />} />}
+          />
         </Routes>
       )}
     </ErrorBoundary>

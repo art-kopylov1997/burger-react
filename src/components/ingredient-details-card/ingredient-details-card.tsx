@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, useCallback, useMemo } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/useTypedSelector";
 import { getCurrentIngredientState } from "../../redux/selectors/current-ingredient-selector";
 import Modal from "../modal";
 import { getIngredientsState } from "../../redux/selectors/ingredient-selector";
@@ -7,17 +7,16 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   clearCurrentIngredient,
   fillCurrentIngredient,
-} from "../../redux/action-creators/current-ingredient-creators";
+} from "../../redux/actions/current-ingredient";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
-const IngredientDetailsCard = () => {
-  const { name, image, calories, proteins, fat, carbohydrates } = useSelector(
-    getCurrentIngredientState
-  );
+const IngredientDetailsCard: FC = () => {
+  const { name, image, calories, proteins, fat, carbohydrates } =
+    useAppSelector(getCurrentIngredientState);
 
-  const { ingredients } = useSelector(getIngredientsState);
+  const { ingredients } = useAppSelector(getIngredientsState);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();

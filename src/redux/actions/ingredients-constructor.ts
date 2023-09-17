@@ -9,7 +9,6 @@ import { IIngredient } from "../../utils/interfaces";
 
 export interface IAddIngredientConstructorAction {
   readonly type: typeof ADD_BUN_CONSTRUCTOR | typeof ADD_INGREDIENT_CONSTRUCTOR;
-  // i don't know -_-
   readonly payload: any;
 }
 

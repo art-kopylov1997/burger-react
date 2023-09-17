@@ -36,7 +36,11 @@ const Modal: FC<PropsWithChildren<IModal>> = ({
         <div className={classes.blockTitles}>
           <p className="text text_type_main-large">{title}</p>
 
-          <div className={classes.closeIconWrapper} onClick={closeModal}>
+          <div
+            className={classes.closeIconWrapper}
+            onClick={closeModal}
+            data-testid="modal-close-button"
+          >
             <CloseIcon type="primary" />
           </div>
         </div>

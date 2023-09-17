@@ -110,6 +110,7 @@ const BurgerConstructor: FC = () => {
             className={classes.contentIngredients}
             ref={dropTarget}
             style={{ borderColor }}
+            data-testid="constructor"
           >
             {BUN && (
               <div className="ml-5">
@@ -152,6 +153,7 @@ const BurgerConstructor: FC = () => {
             size="large"
             onClick={createNewOrder}
             disabled={!BUN}
+            data-testid="submit-order-button"
           >
             Оформить заказ
           </Button>

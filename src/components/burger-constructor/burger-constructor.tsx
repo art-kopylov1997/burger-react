@@ -26,7 +26,6 @@ import { setOrderCost } from "../../redux/actions/ordering";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAuthUserState } from "../../redux/selectors/auth-selector";
 import { IIngredient } from "../../utils/interfaces";
-import { getCookie } from "../../helpers/cookie-helper";
 
 const BurgerConstructor: FC = () => {
   const { ingredientsConstructor, bunsConstructor } = useAppSelector(

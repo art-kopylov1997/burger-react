@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
+    "cypress": "^13.2.0",
     "fetch-mock": "^9.11.0",
     "jest": "^27.5.1",
     "prettier": "2.8.8",

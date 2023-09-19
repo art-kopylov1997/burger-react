@@ -1,15 +1,12 @@
 # REACT-BURGER
-<hr>
 
 
 ## Описание:
-<hr>
 Это учебный проект от Яндекс Практикум, в котором реализован сайт-конструктор для заказа еды
 
 
 
 ## Технологии:
-<hr>
 
 - React, Hooks, TS, CSS(module)
 - Redux + Redux Toolkit + Middleware
@@ -22,7 +19,6 @@
 
 
 ## Как запустить:
-<hr>
 
 _Старт приложения:_
 1) npm run i
@@ -40,7 +36,6 @@ _Деплой приложения:_
 
 
 ## Об приложении:
-<hr>
 
 _Реализовано:_
 - дестопная верстка
@@ -56,6 +51,5 @@ _Не реализовано:_
 
 
 ## Ссылка на продакшен версию:
-<hr>
 
-https://art-kopylov1997.github.io/burger-react/
+https://art-kopylov1997.github.io/burger-react/index.html 

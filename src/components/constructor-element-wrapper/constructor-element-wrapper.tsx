@@ -24,9 +24,9 @@ const ConstructorElementWrapper: FC<IConstructorElementWrapper> = ({
       if (!ref.current) {
         return;
       }
+      // @ts-ignore
+      const dragIndex = item.index;
       const hoverIndex = index;
-      const dragIndex = hoverIndex;
-      // const hoverIndex = index;
       if (dragIndex === hoverIndex) {
         return;
       }
@@ -42,9 +42,8 @@ const ConstructorElementWrapper: FC<IConstructorElementWrapper> = ({
         return;
       }
       moveCard(dragIndex, hoverIndex);
-
-      // item.index = hoverIndex;
-      index = hoverIndex
+      // @ts-ignore
+      item.index = hoverIndex;
     },
   });
 

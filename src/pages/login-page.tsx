@@ -31,16 +31,27 @@ export const LoginPage: FC = () => {
       <p className="text text_type_main-medium">Вход</p>
 
       <div className={`${classes.blockInputs} mt-6`}>
-        <EmailInput name="email" value={values.email} onChange={handleChange} />
+        <EmailInput
+          name="email"
+          value={values.email}
+          onChange={handleChange}
+          data-testid="email-input"
+        />
         <PasswordInput
           name="password"
           value={values.password}
           onChange={handleChange}
+          data-testid="password-input"
         />
       </div>
 
       <div className="mt-6 mb-20">
-        <Button htmlType="submit" type="primary" size="large">
+        <Button
+          htmlType="submit"
+          type="primary"
+          size="large"
+          data-testid="login-button"
+        >
           Войти
         </Button>
       </div>

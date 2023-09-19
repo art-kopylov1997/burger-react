@@ -9,7 +9,12 @@ interface IOrderIdentifier {
 const OrderIdentifier: FC<IOrderIdentifier> = ({ orderNumber }) => {
   return (
     <div className={classes.root}>
-      <p className="text text_type_digits-large mb-8">{orderNumber}</p>
+      <p
+        className="text text_type_digits-large mb-8"
+        data-testid="order-number"
+      >
+        {orderNumber}
+      </p>
       <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
       <img src={DoneImg} alt="done" />
       <p className="text text_type_main-small mt-15 mb-2">

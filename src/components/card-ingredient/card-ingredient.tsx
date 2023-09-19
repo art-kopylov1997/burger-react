@@ -62,6 +62,7 @@ const CardIngredient: FC<ICardIngredient> = ({ ingredient }) => {
         to={`/ingredients/${ingredient._id}`}
         state={{ background: location }}
         className={classes.link}
+        data-testid="stock-ingredient"
       >
         <div className={classes.wrapperImage}>
           {ingredientCounter > 0 && (

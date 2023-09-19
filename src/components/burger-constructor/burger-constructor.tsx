@@ -26,7 +26,6 @@ import { setOrderCost } from "../../redux/actions/ordering";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAuthUserState } from "../../redux/selectors/auth-selector";
 import { IIngredient } from "../../utils/interfaces";
-import { getCookie } from "../../helpers/cookie-helper";
 
 const BurgerConstructor: FC = () => {
   const { ingredientsConstructor, bunsConstructor } = useAppSelector(
@@ -111,6 +110,7 @@ const BurgerConstructor: FC = () => {
             className={classes.contentIngredients}
             ref={dropTarget}
             style={{ borderColor }}
+            data-testid="constructor"
           >
             {BUN && (
               <div className="ml-5">
@@ -153,6 +153,7 @@ const BurgerConstructor: FC = () => {
             size="large"
             onClick={createNewOrder}
             disabled={!BUN}
+            data-testid="submit-order-button"
           >
             Оформить заказ
           </Button>
